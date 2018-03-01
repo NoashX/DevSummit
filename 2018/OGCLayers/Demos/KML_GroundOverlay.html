@@ -1,0 +1,75 @@
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <!--
+  ArcGIS API for JavaScript, https://js.arcgis.com
+  For more information about the widgets-layerlist sample, read the original sample description at developers.arcgis.com.
+  https://developers.arcgis.com/javascript/latest/widgets-layerlist/index.html
+  -->
+<title>KMLLayer - 4.6</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+
+  <script src="https://jsdev.arcgis.com/4.6/"></script>
+
+  <script>
+  var view;
+    require([
+      "esri/views/MapView",
+      "esri/widgets/LayerList",
+      "esri/WebMap",
+      "esri/layers/KMLLayer",
+      "dojo/domReady!"
+    ], function(
+      MapView, LayerList, WebMap, KMLLayer
+    ) {
+
+      var scene = new WebMap({
+        basemap: {
+          portalItem: { id: "6b4764e99107496f9193e4b68a77b73a" }
+        },
+
+        layers: [
+          new KMLLayer("https://ngmdb.usgs.gov/img4/ht_icons/kmz/CA/CA_Redlands_294590_1975_24000.kmz")
+        ]
+      });
+
+      view = new MapView({
+        container: "viewDiv",
+        map: scene,
+        center: [-117.1638, 34.0606],
+        zoom: 12
+      });
+
+      view.then(function() {
+        var layerList = new LayerList({
+          view: view
+        });
+
+        // Add widget to the top right corner of the view
+        view.ui.add(layerList, "top-left");
+
+      });
+    });
+  </script>
+
+</head>
+
+<body class="calcite">
+  <div id="viewDiv"></div>
+</body>
+</html>

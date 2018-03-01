@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>WebTileLayer</title>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+    #infoDiv {
+      position: absolute;
+      top: 15px;
+      left: 60px;
+    }
+    #infoDiv input {
+      border: none;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/views/SceneView",
+      "esri/config",
+      "esri/request",
+      "esri/Color",
+      "esri/widgets/LayerList",
+      "esri/layers/WebTileLayer",
+      "esri/layers/GraphicsLayer",
+      "esri/Graphic",
+      "esri/geometry/Point",
+      "dojo/domReady!"
+    ], function(Map, MapView, SceneView, esriConfig, esriRequest, Color,
+                LayerList, WebTileLayer, GraphicsLayer, Graphic, Point) {
+      // Add stamen url to the list of servers known to support CORS specification.
+      esriConfig.request.corsEnabledServers
+        .push("a.tile.stamen.com", "b.tile.stamen.com", "c.tile.stamen.com",
+          "d.tile.stamen.com");
+      // Create a new instance of the WebTileLayer and set its properties
+      var stamenLayer = new WebTileLayer({
+        urlTemplate: "http://{subDomain}.tile.stamen.com/watercolor/{level}/{col}/{row}.png",
+        subDomains: ["a", "b", "c", "d"],
+        copyright: "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>, " +
+          "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. " +
+          "Data by <a href=\"http://openstreetmap.org/\">OpenStreetMap</a>, " +
+          "under <a href=\"http://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>."
+      });
+      var switchButton = document.getElementById("switch-btn");
+      var appConfig = {
+        mapView: null,
+        sceneView: null,
+        activeView: null,
+        container: "viewDiv" // use same container for views
+      };
+      var map = new Map({
+        layers: [stamenLayer],
+        ground: "world-elevation"
+      });
+      var initialViewParams = {
+        map: map,
+        zoom: 2,
+        center: [15, 65],
+        container: appConfig.container
+      };
+      // create 2D view and and set active
+      appConfig.mapView = createView(initialViewParams, "2d");
+      appConfig.activeView = appConfig.mapView;
+      // create 3D view, won't initialize until container is set
+      initialViewParams.container = null;
+      appConfig.sceneView = createView(initialViewParams, "3d");
+      // switch the view between 2D and 3D each time the button is clicked
+      switchButton.addEventListener("click", function() {
+        switchView();
+      });
+      // Switches the view from 2D to 3D and vice versa
+      function switchView() {
+        var is3D = appConfig.activeView.type === "3d";
+        // remove the reference to the container for the previous view
+        appConfig.activeView.container = null;
+        if (is3D) {
+          // if the input view is a SceneView, set the viewpoint on the
+          // mapView instance. Set the container on the mapView and flag
+          // it as the active view
+          appConfig.mapView.viewpoint = appConfig.activeView.viewpoint.clone();
+          appConfig.mapView.container = appConfig.container;
+          appConfig.activeView = appConfig.mapView;
+          switchButton.value = "3D";
+        } else {
+          appConfig.sceneView.viewpoint = appConfig.activeView.viewpoint.clone();
+          appConfig.sceneView.container = appConfig.container;
+          appConfig.activeView = appConfig.sceneView;
+          switchButton.value = "2D";
+        }
+      }
+      // convenience function for creating a 2D or 3D view
+      function createView(params, type) {
+        var view;
+        var is2D = type === "2d";
+        if (is2D) {
+          view = new MapView(params);
+          return view;
+        } else {
+          view = new SceneView(params);
+        }
+        return view;
+      }
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="infoDiv">
+    <input class="esri-component esri-widget-button esri-widget esri-interactive" type="button"
+      id="switch-btn" value="3D">
+  </div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Generate continuous color visualization - 4.7</title>
+
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.7/esri/css/main.css">
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.7/dijit/themes/claro/claro.css">
+  <script src="https://jsdev.arcgis.com/4.7/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #containerDiv {
+      background-color: white;
+      padding: 3px;
+      text-align: center;
+    }
+
+    #title {
+      font-size: 14pt;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/layers/MapImageLayer",
+      "esri/renderers/smartMapping/creators/color",
+      "esri/renderers/smartMapping/statistics/histogram",
+      "esri/widgets/ColorSlider",
+      "esri/core/lang",
+      "dojo/on",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView, FeatureLayer, MapImageLayer, 
+      colorRendererCreator, histogram, ColorSlider, lang, on
+    ) {
+
+      // Create a map and add it to a MapView
+
+      var map = new Map({
+        basemap: "gray"
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-85.050200, 33.125524],
+        zoom: 6
+      });
+
+      /*****************************************************************
+       * Create renderers for each sublayer: cities, highways, states
+       *****************************************************************/
+
+      var citiesRenderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          size: 7,
+          color: {a: 1, b: 128, g: 0, r: 0},
+          style: "circle"
+        },
+        label: "Cities"
+      };
+
+      var statesRenderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-fill", // autocasts as new SimpleFillSymbol()
+          style: "solid",
+          color: {a: 0, b: 0, g: 168, r: 56},
+          outline: {
+            width: 3,
+            color: {a: 1, b: 0, g: 115, r: 38}
+          }
+        },
+        label: "State boundaries"
+      };
+
+      var highwaysRenderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-line", // autocasts as new SimpleLineSymbol()
+          style: "solid",
+          width: 2,
+          color: {a: 0.75, b: 168, g: 77, r: 0}
+        },
+        label: "Interstate highway"
+      };
+
+      /*****************************************************************
+       * Create a MapImageLayer instance pointing to a Map Service
+       * containing data about US Cities, States and Highways.
+       * Define sublayers with visibility for each layer in Map Service.
+       *****************************************************************/
+
+      var milayer = new MapImageLayer({
+        /*portalItem: {  // autocasts as new PortalItem()
+          id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+        },*/
+        url: "http://ec2-54-242-25-182.compute-1.amazonaws.com:6080/arcgis/rest/services/AGP/USA/MapServer",
+        sublayers: [
+        {
+          id: 0,
+          //renderer: citiesRenderer,
+          //opacity: 0.6,
+          popupTemplate: {
+            title: "{areaname}",
+            content: "{pop2000} people call the city of {areaname},{st} home"
+          }
+        /*},
+        {
+          id: 1,
+          //renderer: highwaysRenderer,
+          //opacity: 0.8,
+          popupTemplate: {
+            title: "{route}",
+            content: "This {admn_class} is {length} miles long"
+          }
+        },
+        {
+          id: 2,
+          //renderer: statesRenderer,
+          //opacity: 0.7,
+          popupTemplate: {
+            title: "{state_name}",
+            content: "{pop2000} people live in {state_abbr}"
+          }*/
+        }]
+      });
+
+      // Create FeatureLayer instance with popupTemplate
+
+      var povLyr = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/counties_politics_poverty/FeatureServer/0",
+        outFields: ["POP_POVERTY", "TOTPOP_CY", "COUNTY", "STATE"],
+        popupTemplate: { // autocasts as new PopupTemplate()
+          title: "{COUNTY}, {STATE}",
+          content: "{POP_POVERTY} of {TOTPOP_CY} people live below the poverty line.",
+          fieldInfos: [
+          {
+            fieldName: "POP_POVERTY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }, {
+            fieldName: "TOTPOP_CY",
+            format: {
+              digitSeparator: true,
+              places: 0
+            }
+          }]
+        }
+      });
+
+      // configure parameters for the color renderer generator
+      // the layer must be specified along with a field name
+      // or arcade expression. The basemap and other properties determine
+      // the appropriate default color scheme.
+
+      var colorParams = {
+        //layer: povLyr,
+        layer: milayer,
+        basemap: map.basemap,
+        //field: "POP_POVERTY",
+        field: "pop2000",
+        //normalizationField: "TOTPOP_CY",
+        theme: "above-and-below"
+      };
+
+      // Set up initial color slider properties.
+      // numHandles determines whether 2 or 3 handles
+      // will be visible in the slider. The primary handle
+      // (middle one of the three) controls all handles
+      // when moved if `syncedHandles` is true.
+
+      var sliderParams = {
+        numHandles: 3,
+        syncedHandles: true,
+        container: "slider"
+      };
+
+      // Generate a continuous color renderer based on the
+      // statistics of the data in the provided layer
+      // and field normalized by the normalizationField.
+      //
+      // This resolves to an object containing several helpful
+      // properties, including color scheme, statistics,
+      // the renderer and visual variable
+
+      colorRendererCreator.createContinuousRenderer(colorParams)
+        .then(function(response) {
+
+          // set the renderer to the layer and add it to the map
+
+          //povLyr.renderer = response.renderer;
+          //map.add(povLyr);
+          milayer.renderer = response.renderer;
+          map.add(milayer);
+
+          // add the statistics and color visual variable objects
+          // to the color slider parameters
+
+          sliderParams.statistics = response.statistics;
+          sliderParams.visualVariable = response.visualVariable;
+
+          // generate a histogram for use in the slider. Input the layer
+          // and field or arcade expression to generate it.
+
+          return histogram({
+            //layer: povLyr,
+            layer: milayer,
+            //field: "POP_POVERTY"//,
+            field: "pop2000"//,
+            //normalizationField: "TOTPOP_CY"
+          });
+
+        })
+        .then(function(histogram) {
+
+          // when it resolves set the histogram in the slider parameters
+          sliderParams.histogram = histogram;
+
+          // input the slider parameters in the slider's constructor
+          // and add it to the view's UI
+
+          var colorSlider = new ColorSlider(sliderParams);
+          view.ui.add("containerDiv", "bottom-left");
+
+          // when the user slides the handle(s), update the renderer
+          // with the updated color visual variable object
+
+          on(colorSlider, "handle-value-change", function() {
+            //var renderer = povLyr.renderer.clone();
+            var renderer = milayer.renderer.clone();
+            renderer.visualVariables = [lang.clone(colorSlider.visualVariable)];
+            //povLyr.renderer = renderer;
+            milayer.renderer = renderer;
+          });
+        })
+        .otherwise(function(err) {
+          console.log("there was an error: ", err);
+        });
+
+    });
+  </script>
+</head>
+
+<body class="claro">
+  <div id="viewDiv"></div>
+  <div id="containerDiv"><span id="title">% population in poverty</span>
+    <div id="slider"></div>
+  </div>
+</body>
+
+</html>

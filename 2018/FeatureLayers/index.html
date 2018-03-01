@@ -1,0 +1,616 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Everything You Need to Know About Feature Layers in the ArcGIS API for JavaScript</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/esri-dev-summit-2018.css">
+ 
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<!-- NOTE: This is a fork from the Esri-approved PPT file here:
+			https://compass.esri.com/org/marketing/DevSummit/Pages/Workshop.aspx
+			We have moved the background images and have formatted the title slide,
+			But other things like alignment of text on subsequent slides may not be
+			in line with the PPT - use this template at your own risk!
+			-->
+			
+			<div class="slides">
+				<section data-background="img/bg-1.png" data-background-size="cover" style="padding-left: 80px;">
+					<h1 style="text-align: left; font-size: 80px;">Everything You Need to Know About</h1>
+					<h1 style="text-align: left; font-size: 80px;">Feature Layers in the</h1>
+					<h1 style="text-align: left; font-size: 80px;">ArcGIS API 4.x for JavaScript</h1>
+					<p style="text-align: left; font-size: 30px;">1:00PM - 1:30PM</p>
+					<p style="text-align: left; font-size: 30px;">Wednesday 03/07/2018</p>
+					<p style="text-align: left; font-size: 30px;">Yann Cabon and Noah Sager</p>
+				</section>
+
+				
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-featurelayer/live/index.html" target="_blank">Introduction To FeatureLayer</a>
+						</br> 
+						FeatureLayers may be created in one of three ways:</br> 
+						- from a service URL
+						- from an ArcGIS portal item ID
+						- from an array of client-side graphics
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## 1) Reference a service URL
+				
+						```js
+require(["esri/layers/FeatureLayer"], function(FeatureLayer){
+
+						  // points to the trees layer at Warren Wilson College in North Carolina
+						  const layer = new FeatureLayer({
+						    url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+						  });
+
+						  map.add(layer);  // adds the layer to the map
+						});
+
+						``` 
+						## 2) Reference an ArcGIS portal Item ID
+
+						```js
+						require(["esri/layers/FeatureLayer"], function(FeatureLayer){
+						  
+						  // references an ArcGIS Online item pointing to a Feature Layer, this could also be an ArcGIS Enterprise portal Item
+						  const layer = new FeatureLayer({
+							  portalItem: {   // autocasts as new PortalItem
+							    id: "8444e275037549c1acab02d2626daaee"
+							  }
+						  });
+
+						  map.add(layer);  // adds the layer to the map
+						});
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## 3) Add an array of client-slide graphics
+						</br>
+				
+						```js
+						require(["esri/layers/FeatureLayer"], function(FeatureLayer){
+
+	const layer = new FeatureLayer({
+
+							   // create a new Field for each field object
+							   fields: [
+							   {
+							     name: "ObjectID",
+							     alias: "ObjectID",
+							     type: "oid"
+							   }, {
+							     name: "type",
+							     alias: "Type",
+							     type: "string"
+							   }, {
+							     name: "place",
+							     alias: "Place",
+							     type: "string"
+							   }],
+							   objectIdField: "ObjectID",
+							   geometryType: "point",
+							   spatialReference: { wkid: 4326 },
+							   source: graphics,  //  an array of graphics with geometry and attributes
+							                      // popupTemplate and symbol are not required in each graphic
+							                      // since those are handled with the popupTemplate and
+							                      // renderer properties of the layer
+							   popupTemplate: pTemplate,
+							   renderer: uvRenderer  // UniqueValueRenderer based on `type` attribute
+							});
+
+							map.add(layer);  // adds the layer to the map
+						});
+						```
+					</textarea>
+				</section>
+
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/presentations/FeatureLayer/Labels.html" target="_blank">Labeling</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## Labeling
+
+						```js
+                        var labelClass = new LabelClass({
+					        symbol: {
+					          type: "label-3d",  // autocasts as new LabelSymbol3D()
+					          symbolLayers: [{
+					            type: "text",  // autocasts as new TextSymbol3DLayer()
+					            material: {
+					              color: "white"
+					            },
+					            size: 10
+					          }]
+					        },
+					        labelPlacement: "above-right",
+					        labelExpressionInfo: {
+					          expression: "$feature.CITY_NAME"
+					        }
+					     });
+
+					    var featureLayer = new FeatureLayer({
+					        url: url,
+					        labelsVisible: true,
+					        labelingInfo: [labelClass]
+					    });
+						```		    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/visualization-location-types/live/index.html" target="_blank">Renderers: Manual Visualizations</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Renderers: Manual Visualizations
+				
+						```js
+                        var hwyRenderer = {
+				          type: "unique-value",  // autocasts as new UniqueValueRenderer()
+				          defaultSymbol: otherSym,
+				          defaultLabel: "Other major roads",
+				          field: "CLASS",
+				          uniqueValueInfos: [{
+				            value: "I",  // code for interstates/freeways
+				            symbol: fwySym,
+				            label: "Interstate"
+				          }, {
+				            value: "U",  // code for U.S. highways
+				            symbol: hwySym,
+				            label: "US Highway"
+				          }]
+				        };
+
+				        // Set the renderer on the layer
+				        var hwyLyr = new FeatureLayer({
+				          url: url,
+				          renderer: hwyRenderer
+				        });
+                        
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/visualization-multivariate-2d/live/index.html" target="_blank">Visual Variables</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Visual Variables
+				
+						```js
+                        var sizeVisVar = {
+					        type: "size",
+					        field: "TOTPOP_CY",
+					        normalizationField: "SQMI",
+					        valueUnit: "unknown",
+					        stops: [
+					        {
+					          value: 4000,
+					          size: 6
+					        },
+					        {
+					          value: 23000,
+					          size: 40
+					        }]
+					    };
+
+					    var renderer = {
+					        type: "simple",  // autocasts as new SimpleRenderer()
+					        symbol: {
+					          type: "simple-marker"  // autocasts as new SimpleMarkerSymbol()
+					          }
+					        },
+					        // Set the color and size visual variables on the renderer
+					        visualVariables: [colorVisVar, sizeVisVar]
+					    };
+					                        
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/visualization-sm-size/live/index.html" target="_blank">Smart Mapping</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Smart Mapping
+				
+						```js
+                        var sizeParams = {
+					        layer: povLyr,
+					        basemap: map.basemap,
+					        field: "POP_POVERTY",
+					        normalizationField: "TOTPOP_CY",
+					        legendOptions: {
+					          title: "Ratio of people living in poverty"
+					        },
+					        minValue: 0.15
+					    };
+
+					    sizeRendererCreator.createContinuousRenderer(sizeParams)
+					        .then(function(response) {
+
+					          // set generated renderer on the layer and add it to the map
+					          povLyr.renderer = response.renderer;
+					          map.add(povLyr);
+
+					          sliderParams.statistics = response.statistics;
+					          sliderParams.visualVariable = lang.clone(response.visualVariables[
+					            0]);
+
+					          // generate a histogram for use in the slider
+					          return histogram({
+					            layer: povLyr,
+					            field: sizeParams.field,
+					            normalizationField: sizeParams.normalizationField,
+					            minValue: sizeParams.minValue
+					          });
+					    });
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/editing-applyedits/live/index.html" target="_blank">Editing</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Editing
+				
+						```js
+                        function setupEditing() {
+				        
+				          editArea = dom.byId("editArea");
+				          updateInstructionDiv = dom.byId("updateInstructionDiv");
+				          attributeEditing = dom.byId("featureUpdateDiv");
+				          inputDescription = dom.byId("inputDescription");
+				          inputUserInfo = dom.byId("inputUserInfo");
+
+				          on(dom.byId("btnUpdate"), "click", function(evt) {
+				            if (editFeature) {
+				              editFeature.attributes["Incident_Desc"] = inputDescription.value;
+				              editFeature.attributes["Incident_Address"] = inputUserInfo.value;
+
+				              var edits = {
+				                updateFeatures: [editFeature]
+				              };
+
+				              applyEdits(edits);
+				            }
+				        });
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/featurelayer-query/live/index.html" target="_blank">Query on a Layer (service)</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Query on a Layer (service)
+				
+						```js
+				        view.when(function() {
+				            return wellsLayer.when(function() {
+				              var query = wellsLayer.createQuery();
+				              return wellsLayer.queryFeatures(query);
+				            });
+				        });
+
+				        // return an array of all the values in a field of the wells layer
+				        function getValues(response) {
+				          var features = response.features;
+				          var values = features.map(function(feature) {
+				            return feature.attributes.STATUS2;
+				          });
+				          return values;
+				        };
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-scenelayerview-query/live/index.html" target="_blank">Query on a LayerView (client-side)</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Query on a LayerView (client-side)
+				
+						```js
+                        var query = new Query({
+	                      objectIds: [response.results[0].graphic.attributes.OBJECTID],
+	                      outFields: ["*"]
+	                    });
+
+	                    // queryExtent() will return the 3D extent of the feature that satisfies the query
+	                    sceneLayerView.queryExtent(query)
+	                      .then(function(result) {
+	                        view.goTo({
+	                          target: result.extent.expand(2),
+	                          tilt: 60
+	                        }, {
+	                          duration: 1000,
+	                          easing: "out-expo"
+	                        });
+	                    });
+
+	                    // queryFeatures() will return the feature that satisfies the query 
+	                    sceneLayerView.queryFeatures(query)
+	                      .then(function(result) {
+	                        showInfo(result.features[0].attributes);
+	                    });
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="http://noashx.github.io/presentations/FeatureLayer/3DSymbology.html" target="_blank">3D Symbology</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## 3D Symbology
+				
+						```js
+                        var renderer = {
+				          type: "simple",  // autocasts as new SimpleRenderer()
+				          symbol: {
+				            type: "web-style",  // autocasts as new WebStyleSymbol()
+				            styleName: "esriRealisticTreesStyle",
+				            name: "Other"
+				          },
+				          label: "tree",
+				          visualVariables: [
+				          {
+				            type: "size",
+				            axis: "height",
+				            field: "Height", // tree height
+				            valueUnit: "feet"
+				          }, {
+				            type: "size",
+				            axis: "width",
+				            field: "Width_EW", // crown diameter from east to west
+				            valueUnit: "feet"
+				          }, {
+				            type: "size",
+				            axis: "depth",
+				            field: "Width_NS", // crown diameter from north to south
+				            valueUnit: "feet"
+				          }, {
+				            type: "color",
+				            field: "C_Storage", // Carbon storage
+				            stops: [
+				              {
+				                value: 0,
+				                color: "#f7fcb9"
+				              }, // features with zero carbon
+				              {
+				                value: 10000,
+				                color: "#31a354"
+				              } // features with 800 carbon
+				            ],
+				            legendOptions: {
+				              title: "Carbon Storage"
+				            }
+				          }]
+				        };
+
+				        // Construct the layer and set the renderer and popupTemplate on it
+				        var treesLayer = new FeatureLayer({
+				          url: url,
+				          renderer: renderer
+				        });
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/visualization-trees-realistic/live/index.html" target="_blank">Popups</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Popups
+				
+						```js
+                        var treesLayer = new FeatureLayer({
+				          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
+				          renderer: renderer,
+				          outFields: ["*"],
+				          popupTemplate: { // autocasts as new PopupTemplate()
+				            title: "{Cmn_Name}",
+				            content: "<i>{Sci_Name}</i><br>" +
+				              "This tree is in {Condition} condition and is {Height} feet in height."
+				          }
+				        });
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/presentations/FeatureLayer/WebGL_no_highlight.html" target="_blank">WebGL</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## WebGL
+				
+						```js
+                        <script>
+					      var dojoConfig = {
+					        has: {
+					          "esri-featurelayer-webgl": 1
+					        }
+					      };
+					    </script>
+		
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/views-composite-views/live/index.html" target="_blank">Highlight</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Highlight
+				
+						```js
+                          var highlight = null;
+
+					      function enableHighlightOnPointerMove(view) {
+					        view.whenLayerView(layer).then(function(layerView) {
+					          view.on("pointer-move", function(event) {
+					            view.hitTest(event)
+					              .then(function(response) {
+
+					                // remove the previous highlight
+					                if (highlight) {
+					                  highlight.remove();
+					                  highlight = null;
+					                }
+
+					                if (response.results.length) {
+					                  var feature = response.results.filter(function(
+					                    result) {
+					                    return result.graphic.layer === layer;
+					                  })[0].graphic;
+
+					                  feature.popupTemplate = layer.popupTemplate;
+					                  id = feature.attributes.OBJECTID;
+					                  highlight = layerView.highlight([id]);
+					                  var selectionId = mainView.popup.selectedFeature ?
+					                    mainView.popup.selectedFeature.attributes
+					                    .OBJECTID : null;
+
+					                  if (highlight && (id !== selectionId)) {
+					                    mainView.popup.open({
+					                      features: [feature],
+					                      updateLocationEnabled: true
+					                    });
+					                  }
+					                } else {
+					                  if (mainView.popup.visible) {
+					                    mainView.popup.close();
+					                    mainView.popup.clear();
+					                  }
+					                }
+					              });
+					          });
+					        });
+					      }
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-final.jpg">
+					<textarea data-template>
+						<img src="img/esri-science-logo-white.png" style="margin: 0; background: none; border: 0px; box-shadow: none;" />
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				// This height and width are here for the left-aligned title slide. 
+				// If you do not want that, you can remove these two settings and
+				// the presentation will be closer to OOTB-Reveal.js:
+				width: '100%',
+				height: '100%',
+
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

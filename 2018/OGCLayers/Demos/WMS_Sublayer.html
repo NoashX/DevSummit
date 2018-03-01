@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>WMSLayer with Sublayer</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/WMSLayer",
+        "esri/widgets/LayerList",
+        "esri/config",
+        "dojo/domReady!"
+      ],
+      function(
+        Map,
+        MapView,
+        WMSLayer,
+        LayerList,
+        esriConfig
+      ) {
+
+        esriConfig.request.corsEnabledServers.push("geobretagne.fr");
+
+        var url = "https://geobretagne.fr/geoserver/onema/wms";
+
+        layer = new WMSLayer({
+          url: url,
+          title: "French National Agency for Water and Aquatic Environments Mapping Visualization Service (WMS)",
+          sublayers:[
+          {
+            name: "station_onde_dir2_2013",
+            title: "Brittany National Observatory Stations",
+            visible: true
+          },
+          {
+            name: "rom",
+            title: "Brittany Research Observation Network",
+            visible: true
+          },
+          {
+            name: "reh",
+            title: "Habitats Evaluation Network Basin: Loire Bretagne",
+            visible: true
+          }]
+        });
+
+        map = new Map({
+          basemap: "dark-gray",
+          layers: [layer]
+        });
+
+        view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center:  [-0.69486, 47.60053],
+          zoom: 8
+        });
+
+      var layerlist = new LayerList({
+        view: view
+      });
+      view.ui.add(layerlist, "top-right");
+
+      });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

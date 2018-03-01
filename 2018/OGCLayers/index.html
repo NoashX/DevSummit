@@ -1,0 +1,486 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Everything You Need to Know About OGC Layers in the ArcGIS API for JavaScript</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/esri-dev-summit-2018.css">
+ 
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<!-- NOTE: This is a fork from the Esri-approved PPT file here:
+			https://compass.esri.com/org/marketing/DevSummit/Pages/Workshop.aspx
+			We have moved the background images and have formatted the title slide,
+			But other things like alignment of text on subsequent slides may not be
+			in line with the PPT - use this template at your own risk!
+			-->
+			
+			<div class="slides">
+				<section data-background="img/bg-1.png" data-background-size="cover" style="padding-left: 80px;">
+					<h1 style="text-align: left; font-size: 80px;">Everything You Need to Know About</h1>
+					<h1 style="text-align: left; font-size: 80px;">OGC Layers in the</h1>
+					<h1 style="text-align: left; font-size: 80px;">ArcGIS API 4.x for JavaScript</h1>
+					<p style="text-align: left; font-size: 30px;">1:30PM - 2:00PM</p>
+					<p style="text-align: left; font-size: 30px;">Wednesday 03/07/2018</p>
+					<p style="text-align: left; font-size: 30px;">Yann Cabon and Noah Sager</p>
+				</section>
+
+				
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## <a href="https://doc.arcgis.com/en/arcgis-online/reference/ogc.htm" target="_blank">Introduction to OGC</a>
+						</br> 
+						Currently supported:</br> 
+						- WMS 
+						- WMTS
+						- WFS (3.x only)
+						- WCS (3.x only)
+						- KML
+						- Indexed 3D Scene Layers (I3S)
+						- Scene Layer
+						- IntegratedMeshLayer
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## Introduction to OGC
+						</br></br>
+						If the service is requested from a different domain, </br>
+						a CORS enabled server or a proxy is required. </br>
+						</br>
+						- add the service domain to esriConfig.request.corsEnabledServers
+						- or, add proxy rules list in esriConfig using the addProxyRule()
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## <a href="http://noashx.github.io/presentations/OGC/WMS_Plain.html" target="_blank">WMS </br> (Web Map Services)</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## WMS
+
+						```js
+                        esriConfig.request.corsEnabledServers.push("geobretagne.fr");
+
+				        var url = "https://geobretagne.fr/geoserver/onema/wms";
+
+				        var layer = new WMSLayer({
+				          url: url
+				        });
+
+				        var map = new Map({
+				          basemap: "dark-gray",
+				          layers: [layer]
+				        });
+						
+						```		    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## <a href="http://noashx.github.io/presentations/OGC/WMS.html" target="_blank">WMS with Legend + LayerList Widgets</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## WMS with Legend + LayerList Widgets
+
+						```js
+                        var layerlist = new LayerList({
+				          view: view
+				        });
+				        view.ui.add(layerlist, "top-right");
+
+				        var legend = new Legend({
+				          view: view
+				        });
+				        view.ui.add(legend, "bottom-left");
+						
+						```		    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## <a href="http://noashx.github.io/presentations/OGC/WMS_Sublayer.html" target="_blank">WMS with Sublayer</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## WMS with Sublayer
+
+						```js
+                        layer = new WMSLayer({
+				          url: url,
+				          title: "French National Agency for Water and Aquatic Environments Mapping Visualization Service (WMS)",
+				          sublayers:[
+				          {
+				            name: "station_onde_dir2_2013",
+				            title: "Brittany National Observatory Stations",
+				            visible: true
+				          },
+				          {
+				            name: "rom",
+				            title: "Brittany Research Observation Network",
+				            visible: true
+				          },
+				          {
+				            name: "reh",
+				            title: "Habitats Evaluation Network Basin: Loire Bretagne",
+				            visible: true
+				          }]
+				        });
+						
+						```
+						Habitats Evaluation Network Basin: Loire Bretagne</br>
+                        <a href="https://geobretagne.fr/geoserver/onema/ows?SERVICE=WMS&REQUEST=GetCapabilities" target="_blank">https://geobretagne.fr/geoserver/onema/ows?SERVICE=WMS&REQUEST=GetCapabilities</a>	    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-wmts/live/index.html" target="_blank">WMTS </br> (Web Map Tile Service)</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## WMTS
+				
+						```js
+                          esriConfig.request.corsEnabledServers.push(
+					        "https://gibs.earthdata.nasa.gov");
+
+					      layer = new WMTSLayer({
+					        url: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best",
+					        copyright: "<a target='_top' href='https://earthdata.nasa.gov'>Earthdata</a>",
+					        activeLayer: {
+					          id: "SRTM_Color_Index",
+					        }
+					      });
+
+					      map = new Map({
+					        layers: [layer]
+					      });
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-wmts-sublayers/live/index.html" target="_blank">WMTS with Sublayer</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## WMTS with Sublayer
+				
+						```js
+                        layer.when(function() {
+				          // add all sublayers to the select element
+				          layer.sublayers.forEach(function(sublayer, i) {
+				            selectSublayer.options[selectSublayer.options.length] =
+				              new Option('(' + i + ") " + sublayer.title,
+				                sublayer.id);
+				        });
+
+                        // if sublayer is changed, recreate map, view, and widgets using new activeLayer
+					    document.getElementById("selectSublayer").onchange = function() {
+					      layer.activeLayer = layer.findSublayerById(event.target.value).clone();
+					    };
+					                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/3/samples/layers_wfs/" target="_blank">WFS </br> (Web Feature Services)</a> </br> 
+						(3.x only)
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## WFS (3.x only)
+				
+						```js
+                          var url = "https://data.wien.gv.at/daten/geo";
+
+					      var opts = {
+					        "url": url,
+					        "version": "2.0.0",
+					        "name": "BEZIRKSGRENZEOGD",
+					        "wkid": 4326,
+					        "maxFeatures": 1000
+					      };
+
+					      var layer = new WFSLayer();
+
+					      layer.fromJson(opts);
+
+					      map.addLayer(layer);
+                        
+						```
+					</textarea>
+				</section>
+				
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/3/samples/layers_wcs/" target="_blank">WCS </br> (Web Coverage Services)</a>
+						(3.x only)
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## WCS (3.x only)
+				
+						```js
+            var wcsUrl = "https://sampleserver6.arcgisonline.com/arcgis/services/ScientificData/MODIS_Landcover/ImageServer/WCSServer";
+
+            //Define the raster layer and add to map
+		    var wcsLayer = new WCSLayer(wcsUrl, {
+			  version: "1.0.0",
+			  pixelFilter: colorizer
+		    });
+
+		    map.addLayer(wcsLayer);
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-kml/live/index.html" target="_blank">KML </br> (Keyhole Markup Language)</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## KML 
+				
+						```js
+                      var layer = new KMLLayer({
+				        url: "http://quickmap.dot.ca.gov/data/lcs.kml" // lane closures from California Dept of Transportation
+				      });
+
+				      var map = new Map({
+				        basemap: "topo",
+				        layers: [layer]
+				      });
+
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="http://noashx.github.io/presentations/OGC/KML_GroundOverlay.html" target="_blank">KML Ground Overlay</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## KML Ground Overlay 
+						
+						```js
+                          var scene = new WebMap({
+					        basemap: {
+					          portalItem: { id: "6b4764e99107496f9193e4b68a77b73a" }
+					        },
+
+					        layers: [
+					          new KMLLayer("https://ngmdb.usgs.gov/img4/ht_icons/kmz/CA/CA_Redlands_294590_1975_24000.kmz")
+					        ]
+					      });
+				      
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="http://www.opengeospatial.org/standards/i3s" target="_blank">Indexed 3D Scene Layers (I3S)</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-scenelayer-points/live/index.html" target="_blank">Scene Layer</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Scene Layer
+				
+						```js
+      // setup the renderer with size and color visual variables
+      var renderer = {
+        type: "simple",  // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "point-3d",  // autocasts as new PointSymbol3D()
+          symbolLayers: [{
+            type: "icon"
+          }] 
+        },
+        visualVariables: [{
+          // size each icon based on the airport's elevation
+          type: "size",
+          field: "elevation_ft",
+          stops: [
+          {
+            value: 0,
+            size: 2
+          },
+          {
+            value: 15000,
+            size: 35
+          }]
+        }, {
+          // shade each airport a different color based on its type
+          type: "color",
+          field: "type_airport",
+          stops: [{
+            value: 1,
+            color: [252, 12, 245]
+          },
+          {
+            value: 3,
+            color: [83, 0, 244]
+          },
+          {
+            value: 7,
+            color: [4, 245, 248]
+          }]
+        }]
+      };
+
+      // Create SceneLayer from a Scene Service URL
+      var sceneLayer = new SceneLayer({
+        url: "https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0",
+        renderer: renderer,  // Set the renderer to sceneLayer
+        screenSizePerspectiveEnabled: false  // Set perspective to false every time size visual variables are used with icons
+      });
+                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-integratedmeshlayer/live/index.html" target="_blank">IntegratedMeshLayer</a>
+
+						Integrated mesh data is typically captured by an automated process for constructing </br>
+						3D objects from large sets of overlapping imagery. The result integrates the original </br>
+						input image information as a textured mesh using a triangular interlaced structure.
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## IntegratedMeshLayer
+				
+						```js
+var layer = new IntegratedMeshLayer({
+  url: "https://tiles.arcgis.com/tiles/FQD0rKU8X5sAQfh8/arcgis/rest/services/VRICON_Yosemite_Sample_Integrated_Mesh_scene_layer/SceneServer",
+  // Integrated Mesh data provided by VRICON (www.vricon.com)
+  copyright: "VRICON"
+});
+
+var map = new Map({
+  basemap: "satellite",
+  layers: [layer],
+  ground: "world-elevation"
+});
+		                        
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Additional 3D Sessions
+
+						<img style="float: center;" src="img/3D_DevSummit2018Blog.png">
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-final.jpg">
+					<textarea data-template>
+						<img src="img/esri-science-logo-white.png" style="margin: 0; background: none; border: 0px; box-shadow: none;" />
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				// This height and width are here for the left-aligned title slide. 
+				// If you do not want that, you can remove these two settings and
+				// the presentation will be closer to OOTB-Reveal.js:
+				width: '100%',
+				height: '100%',
+
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
