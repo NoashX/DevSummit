@@ -62,19 +62,26 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 
 						  // points to the trees layer at Warren Wilson College in North Carolina
 						  const layer = new FeatureLayer({
-						    url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+						    url: "https://services.arcgis.com/V6ZHFr6zdgG0/arcgis/rest/services/Trees/FeatureServer/0"
 						  });
 
 						  map.add(layer);  // adds the layer to the map
 						});
 
 						``` 
-						## 2) Reference an ArcGIS portal Item ID
+						
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## 2) Reference a portal item ID
 
 						```js
 						require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						  
-						  // references an ArcGIS Online item pointing to a Feature Layer, this could also be an ArcGIS Enterprise portal Item
+						  // references an ArcGIS Online item pointing to a Feature Layer, 
+						  // this could also be an ArcGIS Enterprise portal Item
 						  const layer = new FeatureLayer({
 							  portalItem: {   // autocasts as new PortalItem
 							    id: "8444e275037549c1acab02d2626daaee"
@@ -310,26 +317,18 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						## Editing
 				
 						```js
-                        function setupEditing() {
-				        
-				          editArea = dom.byId("editArea");
-				          updateInstructionDiv = dom.byId("updateInstructionDiv");
-				          attributeEditing = dom.byId("featureUpdateDiv");
-				          inputDescription = dom.byId("inputDescription");
-				          inputUserInfo = dom.byId("inputUserInfo");
+		        on(dom.byId("btnUpdate"), "click", function(evt) {
+		            if (editFeature) {
+		              editFeature.attributes["Incident_Desc"] = inputDescription.value;
+		              editFeature.attributes["Incident_Address"] = inputUserInfo.value;
 
-				          on(dom.byId("btnUpdate"), "click", function(evt) {
-				            if (editFeature) {
-				              editFeature.attributes["Incident_Desc"] = inputDescription.value;
-				              editFeature.attributes["Incident_Address"] = inputUserInfo.value;
+		              var edits = {
+		                updateFeatures: [editFeature]
+		              };
 
-				              var edits = {
-				                updateFeatures: [editFeature]
-				              };
-
-				              applyEdits(edits);
-				            }
-				        });
+		              applyEdits(edits);
+		            }
+		        });
                         
 						```
 					</textarea>
@@ -384,8 +383,8 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 	                      outFields: ["*"]
 	                    });
 
-	                    // queryExtent() will return the 3D extent of the feature that satisfies the query
-	                    sceneLayerView.queryExtent(query)
+	                    // queryExtent() will return the 3D extent of the feature that 
+	                    // satisfies the query sceneLayerView.queryExtent(query)
 	                      .then(function(result) {
 	                        view.goTo({
 	                          target: result.extent.expand(2),
@@ -483,16 +482,16 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						## Popups
 				
 						```js
-                        var treesLayer = new FeatureLayer({
-				          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
-				          renderer: renderer,
-				          outFields: ["*"],
-				          popupTemplate: { // autocasts as new PopupTemplate()
-				            title: "{Cmn_Name}",
-				            content: "<i>{Sci_Name}</i><br>" +
-				              "This tree is in {Condition} condition and is {Height} feet in height."
-				          }
-				        });
+    var treesLayer = new FeatureLayer({
+      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Trees/FeatureServer/0",
+      renderer: renderer,
+      outFields: ["*"],
+      popupTemplate: { // autocasts as new PopupTemplate()
+        title: "{Cmn_Name}",
+        content: "<i>{Sci_Name}</i><br>" +
+          "This tree is in {Condition} condition and is {Height} feet in height."
+      }
+    });
 						```
 					</textarea>
 				</section>
