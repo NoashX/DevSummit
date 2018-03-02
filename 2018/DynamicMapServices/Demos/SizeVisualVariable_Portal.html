@@ -22,13 +22,13 @@
   <script>
     require([
         "esri/Map",
-        "esri/views/SceneView",
+        "esri/views/MapView",
         "esri/layers/MapImageLayer",
         "esri/Basemap",
         "dojo/domReady!"
       ],
       function(
-        Map, SceneView, MapImageLayer, Basemap
+        Map, MapView, MapImageLayer, Basemap
       ) {
 
         /*****************************************************************
@@ -53,7 +53,7 @@
           layers: [USALyr]
         });
 
-        var view = new SceneView({
+        var view = new MapView({
           container: "viewDiv",
           map: map,
           center: [-91.7402, 40.3444],
