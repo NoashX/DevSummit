@@ -140,26 +140,26 @@
 						## WMS with Sublayer
 
 						```js
-                        layer = new WMSLayer({
-				          url: url,
-				          title: "French National Agency for Water and Aquatic Environments Mapping Visualization Service (WMS)",
-				          sublayers:[
-				          {
-				            name: "station_onde_dir2_2013",
-				            title: "Brittany National Observatory Stations",
-				            visible: true
-				          },
-				          {
-				            name: "rom",
-				            title: "Brittany Research Observation Network",
-				            visible: true
-				          },
-				          {
-				            name: "reh",
-				            title: "Habitats Evaluation Network Basin: Loire Bretagne",
-				            visible: true
-				          }]
-				        });
+layer = new WMSLayer({
+  url: url,
+  title: "French National Agency for Water and Aquatic Environments Mapping Visualization Service",
+  sublayers:[
+  {
+    name: "station_onde_dir2_2013",
+    title: "Brittany National Observatory Stations",
+    visible: true
+  },
+  {
+    name: "rom",
+    title: "Brittany Research Observation Network",
+    visible: true
+  },
+  {
+    name: "reh",
+    title: "Habitats Evaluation Network Basin: Loire Bretagne",
+    visible: true
+  }]
+});
 						
 						```
 						Habitats Evaluation Network Basin: Loire Bretagne</br>
@@ -180,20 +180,20 @@
 						## WMTS
 				
 						```js
-                          esriConfig.request.corsEnabledServers.push(
-					        "https://gibs.earthdata.nasa.gov");
+          esriConfig.request.corsEnabledServers.push(
+	        "https://gibs.earthdata.nasa.gov");
 
-					      layer = new WMTSLayer({
-					        url: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best",
-					        copyright: "<a target='_top' href='https://earthdata.nasa.gov'>Earthdata</a>",
-					        activeLayer: {
-					          id: "SRTM_Color_Index",
-					        }
-					      });
+	      layer = new WMTSLayer({
+	        url: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best",
+	        copyright: "<a target='_top' href='https://earthdata.nasa.gov'>Earthdata</a>",
+	        activeLayer: {
+	          id: "SRTM_Color_Index",
+	        }
+	      });
 
-					      map = new Map({
-					        layers: [layer]
-					      });
+	      map = new Map({
+	        layers: [layer]
+	      });
                         
 						```
 					</textarea>
@@ -211,18 +211,18 @@
 						## WMTS with Sublayer
 				
 						```js
-                        layer.when(function() {
-				          // add all sublayers to the select element
-				          layer.sublayers.forEach(function(sublayer, i) {
-				            selectSublayer.options[selectSublayer.options.length] =
-				              new Option('(' + i + ") " + sublayer.title,
-				                sublayer.id);
-				        });
+                layer.when(function() {
+		          // add all sublayers to the select element
+		          layer.sublayers.forEach(function(sublayer, i) {
+		            selectSublayer.options[selectSublayer.options.length] =
+		              new Option('(' + i + ") " + sublayer.title,
+		                sublayer.id);
+		        });
 
-                        // if sublayer is changed, recreate map, view, and widgets using new activeLayer
-					    document.getElementById("selectSublayer").onchange = function() {
-					      layer.activeLayer = layer.findSublayerById(event.target.value).clone();
-					    };
+                // if sublayer is changed, recreate map, view, and widgets using new activeLayer
+			    document.getElementById("selectSublayer").onchange = function() {
+			      layer.activeLayer = layer.findSublayerById(event.target.value).clone();
+			    };
 					                        
 						```
 					</textarea>
@@ -274,15 +274,15 @@
 						## WCS (3.x only)
 				
 						```js
-            var wcsUrl = "https://sampleserver6.arcgisonline.com/arcgis/services/ScientificData/MODIS_Landcover/ImageServer/WCSServer";
+var wcsUrl = "https://sampleserver6.arcgisonline.com/arcgis/services/ScientificData/MODIS_Landcover/ImageServer/WCSServer";
 
-            //Define the raster layer and add to map
-		    var wcsLayer = new WCSLayer(wcsUrl, {
-			  version: "1.0.0",
-			  pixelFilter: colorizer
-		    });
+//Define the raster layer and add to map
+var wcsLayer = new WCSLayer(wcsUrl, {
+  version: "1.0.0",
+  pixelFilter: colorizer
+});
 
-		    map.addLayer(wcsLayer);
+map.addLayer(wcsLayer);
                         
 						```
 					</textarea>
@@ -301,7 +301,8 @@
 				
 						```js
                       var layer = new KMLLayer({
-				        url: "http://quickmap.dot.ca.gov/data/lcs.kml" // lane closures from California Dept of Transportation
+                        // lane closures from California Dept of Transportation
+				        url: "http://quickmap.dot.ca.gov/data/lcs.kml" 
 				      });
 
 				      var map = new Map({
@@ -325,15 +326,15 @@
 						## KML Ground Overlay 
 						
 						```js
-                          var scene = new WebMap({
-					        basemap: {
-					          portalItem: { id: "6b4764e99107496f9193e4b68a77b73a" }
-					        },
+  var scene = new WebMap({
+    basemap: {
+      portalItem: { id: "6b4764e99107496f9193e4b68a77b73a" }
+    },
 
-					        layers: [
-					          new KMLLayer("https://ngmdb.usgs.gov/img4/ht_icons/kmz/CA/CA_Redlands_294590_1975_24000.kmz")
-					        ]
-					      });
+    layers: [
+      new KMLLayer("https://ngmdb.usgs.gov/img4/ht_icons/kmz/CA/CA_Redlands_294590_1975_24000.kmz")
+    ]
+  });
 				      
 						```
 					</textarea>
@@ -358,53 +359,53 @@
 						## Scene Layer
 				
 						```js
-      // setup the renderer with size and color visual variables
-      var renderer = {
-        type: "simple",  // autocasts as new SimpleRenderer()
-        symbol: {
-          type: "point-3d",  // autocasts as new PointSymbol3D()
-          symbolLayers: [{
-            type: "icon"
-          }] 
-        },
-        visualVariables: [{
-          // size each icon based on the airport's elevation
-          type: "size",
-          field: "elevation_ft",
-          stops: [
-          {
-            value: 0,
-            size: 2
-          },
-          {
-            value: 15000,
-            size: 35
-          }]
-        }, {
-          // shade each airport a different color based on its type
-          type: "color",
-          field: "type_airport",
-          stops: [{
-            value: 1,
-            color: [252, 12, 245]
-          },
-          {
-            value: 3,
-            color: [83, 0, 244]
-          },
-          {
-            value: 7,
-            color: [4, 245, 248]
-          }]
-        }]
-      };
+  // setup the renderer with size and color visual variables
+  var renderer = {
+    type: "simple",  // autocasts as new SimpleRenderer()
+    symbol: {
+      type: "point-3d",  // autocasts as new PointSymbol3D()
+      symbolLayers: [{
+        type: "icon"
+      }] 
+    },
+    visualVariables: [{
+      // size each icon based on the airport's elevation
+      type: "size",
+      field: "elevation_ft",
+      stops: [
+      {
+        value: 0,
+        size: 2
+      },
+      {
+        value: 15000,
+        size: 35
+      }]
+    }, {
+      // shade each airport a different color based on its type
+      type: "color",
+      field: "type_airport",
+      stops: [{
+        value: 1,
+        color: [252, 12, 245]
+      },
+      {
+        value: 3,
+        color: [83, 0, 244]
+      },
+      {
+        value: 7,
+        color: [4, 245, 248]
+      }]
+    }]
+  };
 
-      // Create SceneLayer from a Scene Service URL
-      var sceneLayer = new SceneLayer({
-        url: "https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0",
-        renderer: renderer,  // Set the renderer to sceneLayer
-        screenSizePerspectiveEnabled: false  // Set perspective to false every time size visual variables are used with icons
-      });
+  // Create SceneLayer from a Scene Service URL
+  var sceneLayer = new SceneLayer({
+    url: "https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0",
+    renderer: renderer,  // Set the renderer to sceneLayer
+    screenSizePerspectiveEnabled: false  // Set perspective to false every time size visual variables are used with icons
+  });
                         
 						```
 					</textarea>
@@ -413,10 +414,6 @@
 				<section data-markdown data-background="img/bg-4.png">
 					<textarea data-template>
 						## <a href="https://developers.arcgis.com/javascript/latest/sample-code/layers-integratedmeshlayer/live/index.html" target="_blank">IntegratedMeshLayer</a>
-
-						Integrated mesh data is typically captured by an automated process for constructing </br>
-						3D objects from large sets of overlapping imagery. The result integrates the original </br>
-						input image information as a textured mesh using a triangular interlaced structure.
 			
 					</textarea>
 				</section>
@@ -444,9 +441,8 @@ var map = new Map({
 
 				<section data-markdown data-background="img/bg-4.png">
 					<textarea data-template>
-						## Additional 3D Sessions
 
-						<img style="float: center;" src="img/3D_DevSummit2018Blog.png">
+						<img style="float: center;" src="img/Additional_3D-Sessions.png">
 				
 					</textarea>
 				</section>
