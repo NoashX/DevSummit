@@ -24,18 +24,19 @@
         "esri/Map",
         "esri/views/SceneView",
         "esri/layers/MapImageLayer",
+        "esri/Basemap",
         "dojo/domReady!"
       ],
       function(
-        Map, SceneView, MapImageLayer
+        Map, SceneView, MapImageLayer, Basemap
       ) {
 
         /*****************************************************************
          * Create a MapImageLayer instance pointing to a Map Service
-         * containing data about pool permits in Southern California.
+         * containing data about the USA
          *****************************************************************/
-        var permitsLyr = new MapImageLayer({
-          portalItem: { // autocasts as new PortalItem()
+        var USALyr = new MapImageLayer({
+          portalItem: {  // autocasts as new PortalItem()
             id: "f0fb7c51fd7342099a4f0aacc1415857"
           }
         });
@@ -44,21 +45,21 @@
          * Add the layer to a map
          *****************************************************************/
         var map = new Map({
-          basemap: "gray",
-          layers: [permitsLyr]
+          basemap: new Basemap({
+          portalItem: {  // autocasts as new PortalItem()
+            id: "fe0039092fb548a5a20c0b56c5275108"
+            }
+          }),
+          layers: [USALyr]
         });
 
         var view = new SceneView({
           container: "viewDiv",
-          map: map
+          map: map,
+          center: [-91.7402, 40.3444],
+          zoom: 5
         });
 
-        /*****************************************************************
-         * Animate to the layer's full extent when the layer loads.
-         *****************************************************************/
-        permitsLyr.when(function() {
-          view.goTo(permitsLyr.fullExtent);
-        });
       });
   </script>
 </head>
