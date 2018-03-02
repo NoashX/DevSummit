@@ -273,16 +273,16 @@
 						## Popups on Sublayers
 				
 						```js
-                        sublayers: [
-				          {
-				            id: 0,
-				            renderer: citiesRenderer,
-				            opacity: 0.6,
-				            popupTemplate: {
-				              title: "{areaname}",
-				              content: "{pop2000} people call the city of {areaname},{st} home"
-				            }
-				          }]
+        sublayers: [
+          {
+            id: 0,
+            renderer: citiesRenderer,
+            opacity: 0.6,
+            popupTemplate: {
+              title: "{areaname}",
+              content: "{pop2000} people call the city of {areaname},{st} home"
+            }
+          }]
 				        ```
 
 					</textarea>
@@ -300,19 +300,19 @@
 						## Dynamic Layers From Enterprise
 				
 						```js
-            var layer = new MapImageLayer({
-		        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
-		        title: "Census Demographics",
-		        sublayers: [{
-		          id: 0,
-		          title: "Population/square mile",
-		          renderer: populationRenderer,
-		          visible: true,
-		          // points to the block groups layer
-		          source: {
-		            mapLayerId: 1
-		          }
-		        }]
+    var layer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+        title: "Census Demographics",
+        sublayers: [{
+          id: 0,
+          title: "Population/square mile",
+          renderer: populationRenderer,
+          visible: true,
+          // points to the block groups layer
+          source: {
+            mapLayerId: 1
+          }
+        }]
 						```
 					</textarea>
 				</section>
@@ -329,25 +329,25 @@
 						## Dynamic Layer with Query Table
 				
 						```js
-        var layer = new MapImageLayer({
-	        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
-	        sublayers: [{
-	          title: "Places",
-	          id: 0,
-	          source: {  // indicates the source of the sublayer is a dynamic data layer
-	            type: "data-layer",
-	            // this object defines the data source of the layer
-	            // in this case it's a table that will be queried using a SQL WHERE clause
-	            dataSource: {
-	              type: "query-table",
-	              workspaceId: "MyDatabaseWorkspaceIDSSR2",
-	              query: queryString + document.getElementById(
-	                "layer-select").value,
-	              oidFields: "objectid"
-	            }
-	          }
-	        }]
-	    });
+    var layer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+        sublayers: [{
+          title: "Places",
+          id: 0,
+          source: {  // indicates the source of the sublayer is a dynamic data layer
+            type: "data-layer",
+            // this object defines the data source of the layer
+            // in this case it's a table that will be queried using a SQL WHERE clause
+            dataSource: {
+              type: "query-table",
+              workspaceId: "MyDatabaseWorkspaceIDSSR2",
+              query: queryString + document.getElementById(
+                "layer-select").value,
+              oidFields: "objectid"
+            }
+          }
+        }]
+    });
 						```
 					</textarea>
 				</section>
@@ -364,54 +364,54 @@
 						## Dynamic Layer with Table Join
 				
 						```js
-            var layer = new MapImageLayer({
-	          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
-	          title: "United States Population",
-	          sublayers: [{
-	            title: "Share of population with Norwegian Ancestry",
-	            id: 0,
-	            opacity: 0.75,
-	            source: {
-	              // indicates the source of the sublayer is a dynamic data layer
-	              type: "data-layer",
-	              // this object defines the data source of the layer
-	              // in this case it's a joined table
-	              dataSource: {
-	                type: "join-table",
-	                // for joined tables you need to define a left table source
-	                // and a right table source. In this case, the left table
-	                // is the map layer containing feature geometries. The ID
-	                // is the layer ID of the sublayer in the service.
-	                leftTableSource: {
-	                  type: "map-layer",
-	                  mapLayerId: 3
-	                },
-	                // The right table source is another data layer object.
-	                // In this case it is a plain table that resides in the
-	                // workspace. Simply indicate the ID of the workspace and
-	                // the name of the table
-	                rightTableSource: {
-	                  type: "data-layer",
-	                  dataSource: {
-	                    type: "table",
-	                    workspaceId: "CensusFileGDBWorkspaceID",
-	                    dataSourceName: "ancestry"
-	                  }
-	                },
-	                // For the joint to be complete, you must indicate the
-	                // primary key and the foreign key to match the table
-	                // records from each respective source. In this case
-	                // we will match table records with the state name.
-	                // So we must indicate the field in each table containing
-	                // the state name.
-	                leftTableKey: "STATE_NAME",
-	                rightTableKey: "State",
-	                // Indicates the join type. In this case all records from
-	                // the map layer are retained even if they don't have
-	                // matching records in the ancestry table.
-	                joinType: "left-outer-join"
-	              }
-	            },
+    var layer = new MapImageLayer({
+      url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+      title: "United States Population",
+      sublayers: [{
+        title: "Share of population with Norwegian Ancestry",
+        id: 0,
+        opacity: 0.75,
+        source: {
+          // indicates the source of the sublayer is a dynamic data layer
+          type: "data-layer",
+          // this object defines the data source of the layer
+          // in this case it's a joined table
+          dataSource: {
+            type: "join-table",
+            // for joined tables you need to define a left table source
+            // and a right table source. In this case, the left table
+            // is the map layer containing feature geometries. The ID
+            // is the layer ID of the sublayer in the service.
+            leftTableSource: {
+              type: "map-layer",
+              mapLayerId: 3
+            },
+            // The right table source is another data layer object.
+            // In this case it is a plain table that resides in the
+            // workspace. Simply indicate the ID of the workspace and
+            // the name of the table
+            rightTableSource: {
+              type: "data-layer",
+              dataSource: {
+                type: "table",
+                workspaceId: "CensusFileGDBWorkspaceID",
+                dataSourceName: "ancestry"
+              }
+            },
+            // For the joint to be complete, you must indicate the
+            // primary key and the foreign key to match the table
+            // records from each respective source. In this case
+            // we will match table records with the state name.
+            // So we must indicate the field in each table containing
+            // the state name.
+            leftTableKey: "STATE_NAME",
+            rightTableKey: "State",
+            // Indicates the join type. In this case all records from
+            // the map layer are retained even if they don't have
+            // matching records in the ancestry table.
+            joinType: "left-outer-join"
+          }
+        },
 						```
 					</textarea>
 				</section>

@@ -210,19 +210,19 @@ layer = new WMSLayer({
 					<textarea data-template>
 						## WMTS with Sublayer
 				
-						```js
-                layer.when(function() {
-		          // add all sublayers to the select element
-		          layer.sublayers.forEach(function(sublayer, i) {
-		            selectSublayer.options[selectSublayer.options.length] =
-		              new Option('(' + i + ") " + sublayer.title,
-		                sublayer.id);
-		        });
+			```js
+    layer.when(function() {
+      // add all sublayers to the select element
+      layer.sublayers.forEach(function(sublayer, i) {
+        selectSublayer.options[selectSublayer.options.length] =
+          new Option('(' + i + ") " + sublayer.title,
+            sublayer.id);
+    });
 
-                // if sublayer is changed, recreate map, view, and widgets using new activeLayer
-			    document.getElementById("selectSublayer").onchange = function() {
-			      layer.activeLayer = layer.findSublayerById(event.target.value).clone();
-			    };
+    // if sublayer is changed, recreate map, view, and widgets using new activeLayer
+    document.getElementById("selectSublayer").onchange = function() {
+      layer.activeLayer = layer.findSublayerById(event.target.value).clone();
+    };
 					                        
 						```
 					</textarea>

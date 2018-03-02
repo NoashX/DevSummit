@@ -270,36 +270,36 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						## Smart Mapping
 				
 						```js
-                        var sizeParams = {
-					        layer: povLyr,
-					        basemap: map.basemap,
-					        field: "POP_POVERTY",
-					        normalizationField: "TOTPOP_CY",
-					        legendOptions: {
-					          title: "Ratio of people living in poverty"
-					        },
-					        minValue: 0.15
-					    };
+        var sizeParams = {
+	        layer: povLyr,
+	        basemap: map.basemap,
+	        field: "POP_POVERTY",
+	        normalizationField: "TOTPOP_CY",
+	        legendOptions: {
+	          title: "Ratio of people living in poverty"
+	        },
+	        minValue: 0.15
+	    };
 
-					    sizeRendererCreator.createContinuousRenderer(sizeParams)
-					        .then(function(response) {
+	    sizeRendererCreator.createContinuousRenderer(sizeParams)
+	        .then(function(response) {
 
-					          // set generated renderer on the layer and add it to the map
-					          povLyr.renderer = response.renderer;
-					          map.add(povLyr);
+	          // set generated renderer on the layer and add it to the map
+	          povLyr.renderer = response.renderer;
+	          map.add(povLyr);
 
-					          sliderParams.statistics = response.statistics;
-					          sliderParams.visualVariable = lang.clone(response.visualVariables[
-					            0]);
+	          sliderParams.statistics = response.statistics;
+	          sliderParams.visualVariable = lang.clone(response.visualVariables[
+	            0]);
 
-					          // generate a histogram for use in the slider
-					          return histogram({
-					            layer: povLyr,
-					            field: sizeParams.field,
-					            normalizationField: sizeParams.normalizationField,
-					            minValue: sizeParams.minValue
-					          });
-					    });
+	          // generate a histogram for use in the slider
+	          return histogram({
+	            layer: povLyr,
+	            field: sizeParams.field,
+	            normalizationField: sizeParams.normalizationField,
+	            minValue: sizeParams.minValue
+	          });
+	    });
 						```
 
 					</textarea>
