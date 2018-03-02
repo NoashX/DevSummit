@@ -72,7 +72,7 @@
 
 				<section data-markdown data-background="img/bg-2.png">
 					<textarea data-template>
-						## 2) Reference an ArcGIS portal Item ID
+						## 2) Reference a portal item ID
 
 						```js
 						require(["esri/layers/MapImageLayer"], function(MapImageLayer){
@@ -111,8 +111,13 @@
 							//Add LayerList widget to the top right corner of the view
 							view.ui.add(layerList, "top-right");
 						});
-						```
+						```				    
+				        
+					</textarea>
+				</section>
 
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
 						## Legend Widget
 
 						```js
@@ -323,25 +328,25 @@
 						## Dynamic Layer with Query Table
 				
 						```js
-                        var layer = new MapImageLayer({
-					        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
-					        sublayers: [{
-					          title: "Places",
-					          id: 0,
-					          source: {  // indicates the source of the sublayer is a dynamic data layer
-					            type: "data-layer",
-					            // this object defines the data source of the layer
-					            // in this case it's a table that will be queried using a SQL WHERE clause
-					            dataSource: {
-					              type: "query-table",
-					              workspaceId: "MyDatabaseWorkspaceIDSSR2",
-					              query: queryString + document.getElementById(
-					                "layer-select").value,
-					              oidFields: "objectid"
-					            }
-					          }
-					        }]
-					    });
+        var layer = new MapImageLayer({
+	        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+	        sublayers: [{
+	          title: "Places",
+	          id: 0,
+	          source: {  // indicates the source of the sublayer is a dynamic data layer
+	            type: "data-layer",
+	            // this object defines the data source of the layer
+	            // in this case it's a table that will be queried using a SQL WHERE clause
+	            dataSource: {
+	              type: "query-table",
+	              workspaceId: "MyDatabaseWorkspaceIDSSR2",
+	              query: queryString + document.getElementById(
+	                "layer-select").value,
+	              oidFields: "objectid"
+	            }
+	          }
+	        }]
+	    });
 						```
 					</textarea>
 				</section>
@@ -358,54 +363,54 @@
 						## Dynamic Layer with Table Join
 				
 						```js
-                        var layer = new MapImageLayer({
-				          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
-				          title: "United States Population",
-				          sublayers: [{
-				            title: "Share of population with Norwegian Ancestry",
-				            id: 0,
-				            opacity: 0.75,
-				            source: {
-				              // indicates the source of the sublayer is a dynamic data layer
-				              type: "data-layer",
-				              // this object defines the data source of the layer
-				              // in this case it's a joined table
-				              dataSource: {
-				                type: "join-table",
-				                // for joined tables you need to define a left table source
-				                // and a right table source. In this case, the left table
-				                // is the map layer containing feature geometries. The ID
-				                // is the layer ID of the sublayer in the service.
-				                leftTableSource: {
-				                  type: "map-layer",
-				                  mapLayerId: 3
-				                },
-				                // The right table source is another data layer object.
-				                // In this case it is a plain table that resides in the
-				                // workspace. Simply indicate the ID of the workspace and
-				                // the name of the table
-				                rightTableSource: {
-				                  type: "data-layer",
-				                  dataSource: {
-				                    type: "table",
-				                    workspaceId: "CensusFileGDBWorkspaceID",
-				                    dataSourceName: "ancestry"
-				                  }
-				                },
-				                // For the joint to be complete, you must indicate the
-				                // primary key and the foreign key to match the table
-				                // records from each respective source. In this case
-				                // we will match table records with the state name.
-				                // So we must indicate the field in each table containing
-				                // the state name.
-				                leftTableKey: "STATE_NAME",
-				                rightTableKey: "State",
-				                // Indicates the join type. In this case all records from
-				                // the map layer are retained even if they don't have
-				                // matching records in the ancestry table.
-				                joinType: "left-outer-join"
-				              }
-				            },
+            var layer = new MapImageLayer({
+	          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+	          title: "United States Population",
+	          sublayers: [{
+	            title: "Share of population with Norwegian Ancestry",
+	            id: 0,
+	            opacity: 0.75,
+	            source: {
+	              // indicates the source of the sublayer is a dynamic data layer
+	              type: "data-layer",
+	              // this object defines the data source of the layer
+	              // in this case it's a joined table
+	              dataSource: {
+	                type: "join-table",
+	                // for joined tables you need to define a left table source
+	                // and a right table source. In this case, the left table
+	                // is the map layer containing feature geometries. The ID
+	                // is the layer ID of the sublayer in the service.
+	                leftTableSource: {
+	                  type: "map-layer",
+	                  mapLayerId: 3
+	                },
+	                // The right table source is another data layer object.
+	                // In this case it is a plain table that resides in the
+	                // workspace. Simply indicate the ID of the workspace and
+	                // the name of the table
+	                rightTableSource: {
+	                  type: "data-layer",
+	                  dataSource: {
+	                    type: "table",
+	                    workspaceId: "CensusFileGDBWorkspaceID",
+	                    dataSourceName: "ancestry"
+	                  }
+	                },
+	                // For the joint to be complete, you must indicate the
+	                // primary key and the foreign key to match the table
+	                // records from each respective source. In this case
+	                // we will match table records with the state name.
+	                // So we must indicate the field in each table containing
+	                // the state name.
+	                leftTableKey: "STATE_NAME",
+	                rightTableKey: "State",
+	                // Indicates the join type. In this case all records from
+	                // the map layer are retained even if they don't have
+	                // matching records in the ancestry table.
+	                joinType: "left-outer-join"
+	              }
+	            },
 						```
 					</textarea>
 				</section>
@@ -422,28 +427,28 @@
 						## Dynamic Layer with Raster Data
 				
 						```js
-                        var layer = new MapImageLayer({
-				          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/GlacierBay/MapServer",
-				          minScale: 2000000,
-				          sublayers: [{
-				            id: 1,
-				            title: "hillshade",
-				            source: {
-				              // indicates the source of the sublayer is a dynamic data layer
-				              type: "data-layer",
-				              // this object defines the data source of the layer
-				              // in this case it's a raster located in a registered workspace
-				              dataSource: {
-				                type: "raster",
-				                workspaceId: "GlacierBayID",
-				                dataSourceName: "gb_hillshade"
-				              }
-				            }
-				          }, {
-				            id: 0,
-				            title: "dem"
-				          }]
-				        });
+            var layer = new MapImageLayer({
+	          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/GlacierBay/MapServer",
+	          minScale: 2000000,
+	          sublayers: [{
+	            id: 1,
+	            title: "hillshade",
+	            source: {
+	              // indicates the source of the sublayer is a dynamic data layer
+	              type: "data-layer",
+	              // this object defines the data source of the layer
+	              // in this case it's a raster located in a registered workspace
+	              dataSource: {
+	                type: "raster",
+	                workspaceId: "GlacierBayID",
+	                dataSourceName: "gb_hillshade"
+	              }
+	            }
+	          }, {
+	            id: 0,
+	            title: "dem"
+	          }]
+	        });
 						```
 					</textarea>
 				</section>
@@ -460,62 +465,62 @@
 						## Visual Variables
 				
 						```js
-                        var renderer = {
-					        type: "simple",  // autocasts as new SimpleRenderer()
-					        symbol: {
-					          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-					          outline: {  // autocasts as new SimpleLineSymbol()
-					            color: "lightgray",
-					            width: 0.5
-					          }
-					        },
-					        label: "Population",
-					        visualVariables: [{
-					          type: "size",
-					          field: "pop2000",  // population
-					          stops: [
-					          {
-					            value: 8000,
-					            size: 4,
-					            label: "0 - 8,000"
-					          },
-					          {
-					            value: 125000,
-					            size: 12,
-					            label: "8,001 - 125,000"
-					          },
-					          {
-					            value: 325000,
-					            size: 24,
-					            label: "125,001 - 325,000"
-					          },
-					          {
-					            value: 500000,
-					            size: 36,
-					            label: "325,001+"
-					          }]
-					        }, {
-					          type: "color",
-					          field: "pop2000",  // population
-					          stops: [
-					            {
-					            value: 8000,
-					            color: "#ADD8E6"
-					          },
-					          {
-					            value: 125000,
-					            color: "#5f5fd8"
-					          },
-					          {
-					            value: 325000,
-					            color: "#2d2dd4"
-					          },
-					          {
-					            value: 500000,
-					            color: "#020260"
-					          }]
-					        }]
-					      };
+                    var renderer = {
+				        type: "simple",  // autocasts as new SimpleRenderer()
+				        symbol: {
+				          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+				          outline: {  // autocasts as new SimpleLineSymbol()
+				            color: "lightgray",
+				            width: 0.5
+				          }
+				        },
+				        label: "Population",
+				        visualVariables: [{
+				          type: "size",
+				          field: "pop2000",  // population
+				          stops: [
+				          {
+				            value: 8000,
+				            size: 4,
+				            label: "0 - 8,000"
+				          },
+				          {
+				            value: 125000,
+				            size: 12,
+				            label: "8,001 - 125,000"
+				          },
+				          {
+				            value: 325000,
+				            size: 24,
+				            label: "125,001 - 325,000"
+				          },
+				          {
+				            value: 500000,
+				            size: 36,
+				            label: "325,001+"
+				          }]
+				        }, {
+				          type: "color",
+				          field: "pop2000",  // population
+				          stops: [
+				            {
+				            value: 8000,
+				            color: "#ADD8E6"
+				          },
+				          {
+				            value: 125000,
+				            color: "#5f5fd8"
+				          },
+				          {
+				            value: 325000,
+				            color: "#2d2dd4"
+				          },
+				          {
+				            value: 500000,
+				            color: "#020260"
+				          }]
+				        }]
+				      };
       ```
 					</textarea>
 				</section>
