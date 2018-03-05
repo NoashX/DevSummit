@@ -82,6 +82,7 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						  
 						  // references an ArcGIS Online item pointing to a Feature Layer, 
 						  // this could also be an ArcGIS Enterprise portal Item
+						  // esriConfig.portalUrl = "http://myHostName.esri.com/arcgis";
 						  const layer = new FeatureLayer({
 							  portalItem: {   // autocasts as new PortalItem
 							    id: "8444e275037549c1acab02d2626daaee"
