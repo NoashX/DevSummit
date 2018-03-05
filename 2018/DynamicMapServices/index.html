@@ -528,18 +528,37 @@ var layer = new MapImageLayer({
 
 				<section data-markdown data-background="img/bg-8.png">
 					<textarea data-template>
-						## TODO:
+						## <a href="https://noashx.github.io/DevSummit/2018/DynamicMapServices/Demos/SmartMapping.html" target="_blank">Smart Mapping</a>
+						(coming soon)
 
-						* smart mapping demo (waiting on PR)
 					</textarea>
 				</section>
 				
 
 				<section data-markdown data-background="img/bg-8.png">
 					<textarea data-template>
-						## TODO:
+						## Smart Mapping
 
-						* smart mapping code snippet
+						```js
+                require(["esri/renderers/smartMapping/creators/size"],
+			    function(sizeRendererCreator) {
+
+                    view.when(function(){
+      
+			          var states = layer.findSublayerById(0);
+			        
+			          sizeRendererCreator.createContinuousRenderer({
+			            layer: states.createFeatureLayer(),
+			            field: "pop2000",
+			            basemap: "dark-gray",
+			            maxValue: 1000000
+			          }).then(function(r){
+			            states.renderer = r.renderer;
+			          });
+			          
+			        });
+			    }
+						```
 					</textarea>
 				</section>
 				
