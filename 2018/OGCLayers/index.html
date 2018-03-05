@@ -178,7 +178,7 @@ layer = new WMSLayer({
 				<section data-markdown data-background="img/bg-4.png">
 					<textarea data-template>
 						## WMTS
-				
+
 						```js
           esriConfig.request.corsEnabledServers.push(
 	        "https://gibs.earthdata.nasa.gov");
@@ -194,8 +194,9 @@ layer = new WMSLayer({
 	      map = new Map({
 	        layers: [layer]
 	      });
+	      				```
                         
-						```
+						
 					</textarea>
 				</section>
 
@@ -209,8 +210,8 @@ layer = new WMSLayer({
 				<section data-markdown data-background="img/bg-4.png">
 					<textarea data-template>
 						## WMTS with Sublayer
-				
-			```js
+
+						```js
     layer.when(function() {
       // add all sublayers to the select element
       layer.sublayers.forEach(function(sublayer, i) {
@@ -223,8 +224,9 @@ layer = new WMSLayer({
     document.getElementById("selectSublayer").onchange = function() {
       layer.activeLayer = layer.findSublayerById(event.target.value).clone();
     };
+    					```
 					                        
-						```
+						
 					</textarea>
 				</section>
 
