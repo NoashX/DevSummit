@@ -539,51 +539,63 @@ require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 						## Highlight
 				
 						```js
-                          var highlight = null;
+  var highlight = null;
 
-					      function enableHighlightOnPointerMove(view) {
-					        view.whenLayerView(layer).then(function(layerView) {
-					          view.on("pointer-move", function(event) {
-					            view.hitTest(event)
-					              .then(function(response) {
+  function enableHighlightOnPointerMove(view) {
+    view.whenLayerView(layer).then(function(layerView) {
+      view.on("pointer-move", function(event) {
+        view.hitTest(event)
+          .then(function(response) {
 
-					                // remove the previous highlight
-					                if (highlight) {
-					                  highlight.remove();
-					                  highlight = null;
-					                }
+            // remove the previous highlight
+            if (highlight) {
+              highlight.remove();
+              highlight = null;
+            }
 
-					                if (response.results.length) {
-					                  var feature = response.results.filter(function(
-					                    result) {
-					                    return result.graphic.layer === layer;
-					                  })[0].graphic;
+            if (response.results.length) {
+              var feature = response.results.filter(function(
+                result) {
+                return result.graphic.layer === layer;
+              })[0].graphic;
 
-					                  feature.popupTemplate = layer.popupTemplate;
-					                  id = feature.attributes.OBJECTID;
-					                  highlight = layerView.highlight([id]);
-					                  var selectionId = mainView.popup.selectedFeature ?
-					                    mainView.popup.selectedFeature.attributes
-					                    .OBJECTID : null;
+              feature.popupTemplate = layer.popupTemplate;
+              id = feature.attributes.OBJECTID;
+              highlight = layerView.highlight([id]);
+              var selectionId = mainView.popup.selectedFeature ?
+                mainView.popup.selectedFeature.attributes
+                .OBJECTID : null;
 
-					                  if (highlight && (id !== selectionId)) {
-					                    mainView.popup.open({
-					                      features: [feature],
-					                      updateLocationEnabled: true
-					                    });
-					                  }
-					                } else {
-					                  if (mainView.popup.visible) {
-					                    mainView.popup.close();
-					                    mainView.popup.clear();
-					                  }
-					                }
-					              });
-					          });
-					        });
-					      }
+              if (highlight && (id !== selectionId)) {
+                mainView.popup.open({
+                  features: [feature],
+                  updateLocationEnabled: true
+                });
+              }
+            } else {
+              if (mainView.popup.visible) {
+                mainView.popup.close();
+                mainView.popup.clear();
+              }
+            }
+          });
+      });
+    });
+  }
                         
 						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+
+						## Questions?
+						Help us to improve by filling out the survey
+					</br></br>
+
+						<img src="img/survey-slide.png" style="margin: 0; background: none; border: 0px; box-shadow: none;">
+				
 					</textarea>
 				</section>
 
