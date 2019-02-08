@@ -5,8 +5,8 @@
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>Toggle Sublayer Visibility</title>
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
-  <script src="https://js.arcgis.com/4.6/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.10/"></script>
 
   <script>
 
@@ -17,8 +17,7 @@
         "esri/views/MapView",
         "esri/layers/MapImageLayer",
         "esri/Basemap",
-        "dojo/on",
-        "dojo/domReady!"
+        "dojo/on"
       ],
       function(
         Map, MapView, MapImageLayer, Basemap, on 
@@ -71,8 +70,8 @@
           symbol: {
             type: "simple-line", // autocasts as new SimpleLineSymbol()
             style: "solid",
-            width: 2.5,
-            color: {a: 0.75, b: 168, g: 77, r: 0}
+            width: 1,
+            color: {a: 0.75, b: 200, g: 200, r: 200}
           },
           label: "Interstate highway"
         };
