@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Popups On Renderers On Sublayer From Portal</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/MapImageLayer",
+        "esri/Basemap",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, MapView, MapImageLayer, Basemap
+      ) {
+
+        /*****************************************************************
+         * Create renderers for each sublayer: cities, highways, states
+         *****************************************************************/
+
+        var citiesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            size: 14,
+            color: {a: 1, b: 200, g: 0, r: 0},
+            style: "circle"
+          },
+          label: "Cities"
+        };
+
+        var statesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 0, g: 0, r: 0},
+            outline: {
+              width: 2,
+              color: {a: 1, b: 0, g: 200, r: 0}
+            }
+          },
+          label: "State boundaries"
+        };
+
+        var highwaysRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-line", // autocasts as new SimpleLineSymbol()
+            style: "solid",
+            width: 1.5,
+            color: {a: 1, b: 100, g: 100, r: 100}
+          },
+          label: "Interstate highway"
+        };
+
+        var countiesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 26, g: 26, r: 26},
+            outline: {
+              width: 0.4,
+              color: {a: 1, b: 71, g: 71, r: 71}
+            }
+          },
+          label: "County boundaries"
+        };
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about US Cities, States and Highways.
+         * Define sublayers with visibility for each layer in Map Service.
+         *****************************************************************/
+
+        var layer = new MapImageLayer({
+          portalItem: { // autocasts as new PortalItem()
+            id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+          },
+          sublayers: [
+          {
+            id: 3,
+            visible: false,
+            renderer: countiesRenderer
+          },
+          {
+            id: 2,
+            visible: true,
+            renderer: statesRenderer,
+            popupTemplate: {
+              title: "{state_name}",
+              content: "{pop2000} people live in {state_abbr}"
+            }
+          },
+          {
+            id: 1,
+            visible: true,
+            renderer: highwaysRenderer,
+          },
+          {
+            id: 0,
+            visible: true,
+            renderer: citiesRenderer,
+            popupTemplate: {
+              title: "{areaname}",
+              content: "{pop2000} people call the city of {areaname}, {st} home"
+            },
+            definitionExpression: "pop2000 > 100000"
+          }]
+        });
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+
+        var map = new Map({
+          basemap: new Basemap({
+            portalItem: { // autocasts as new PortalItem()
+              id: "00c8181753cd4673810a1ede1f52a922"
+            }
+          }),
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 4,
+          center: [-99, 39]
+        });
+
+      });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

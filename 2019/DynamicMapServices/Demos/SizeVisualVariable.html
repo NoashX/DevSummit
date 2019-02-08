@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Size VisualVariable</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.7/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .esri-legend {
+      background-color: lightgray;
+      color: black;
+      opacity: 0.9;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/MapImageLayer",
+      "esri/widgets/Legend",
+      "esri/Basemap",
+      "dojo/domReady!"
+    ], function(
+      Map, MapView,
+      MapImageLayer,
+      Legend, Basemap
+    ) {
+
+      var renderer = {
+        type: "simple",  // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+          outline: {  // autocasts as new SimpleLineSymbol()
+            color: "lightgray",
+            width: 0.5
+          }
+        },
+        label: "Population",
+        visualVariables: [{
+          type: "size",
+          field: "pop2000",  // population
+          stops: [
+          {
+            value: 8000,
+            size: 4,
+            label: "0 - 8,000"
+          },
+          {
+            value: 125000,
+            size: 12,
+            label: "8,001 - 125,000"
+          },
+          {
+            value: 325000,
+            size: 24,
+            label: "125,001 - 325,000"
+          },
+          {
+            value: 500000,
+            size: 36,
+            label: "325,001+"
+          }]
+        }, {
+          type: "color",
+          field: "pop2000",  // population
+          stops: [
+            {
+            value: 8000,
+            color: "#ADD8E6"
+          },
+          {
+            value: 125000,
+            color: "#5f5fd8"
+          },
+          {
+            value: 325000,
+            color: "#2d2dd4"
+          },
+          {
+            value: 500000,
+            color: "#020260"
+          }]
+        }]
+      };
+
+      var statesRenderer = {
+          type: "simple",  // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 0, g: 0, r: 0}
+          },
+          label: "State boundaries"
+        };
+
+      var milayer = new MapImageLayer({
+        portalItem: {  // autocasts as new PortalItem()
+          id: "f0fb7c51fd7342099a4f0aacc1415857"
+        },
+        sublayers: [
+        {
+          id: 0,
+          renderer: renderer,
+          popupTemplate: {
+            title: "{areaname}",
+            content: "{pop2000} people call the city of {areaname}, {st} home"
+          }
+        }]
+      });
+
+      var map = new Map({
+        basemap: new Basemap({
+          portalItem: { // autocasts as new PortalItem()
+            id: "fe0039092fb548a5a20c0b56c5275108"
+          }
+        }),
+        layers: [milayer]
+      });
+
+      var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-91.7402, 40.3444],
+        zoom: 5
+      });
+
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

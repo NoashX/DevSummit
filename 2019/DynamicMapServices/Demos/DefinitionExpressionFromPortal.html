@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Definition Expression From Portal</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/SceneView",
+        "esri/layers/MapImageLayer",
+        "dojo/on",
+        "dojo/number",
+        "esri/Basemap",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, SceneView, MapImageLayer, on, number, Basemap
+      ) {
+
+        /*****************************************************************
+         * Create renderers for each sublayer: cities, highways, states
+         *****************************************************************/
+
+        var citiesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            size: 14,
+            color: {a: 1, b: 200, g: 0, r: 0},
+            style: "circle"
+          },
+          label: "Cities"
+        };
+
+        var statesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 0, g: 0, r: 0},
+            outline: {
+              width: 2,
+              color: {a: 1, b: 0, g: 200, r: 0}
+            }
+          },
+          label: "State boundaries"
+        };
+
+        var highwaysRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-line", // autocasts as new SimpleLineSymbol()
+            style: "solid",
+            width: 1.5,
+            color: {a: 1, b: 100, g: 100, r: 100}
+          },
+          label: "Interstate highway"
+        };
+
+        var countiesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 26, g: 26, r: 26},
+            outline: {
+              width: 0.4,
+              color: {a: 1, b: 71, g: 71, r: 71}
+            }
+          },
+          label: "County boundaries"
+        };
+
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about US Cities, Counties, States and Highways.
+         * Define sublayers with visibility for each layer in Map Service.
+         *****************************************************************/
+        var layer = new MapImageLayer({
+          portalItem: { // autocasts as new PortalItem()
+            id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+          },
+          sublayers: [
+          {
+            id: 3,
+            visible: false,
+            renderer: countiesRenderer
+          },
+          {
+            id: 2,
+            visible: true,
+            renderer: statesRenderer
+          },
+          {
+            id: 1,
+            visible: true,
+            renderer: highwaysRenderer
+          },
+          {
+            id: 0,
+            visible: true,
+            renderer: citiesRenderer,
+            definitionExpression: "pop2000 > 100000"
+          }]
+        });
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+        var map = new Map({
+          basemap: new Basemap({
+          portalItem: { // autocasts as new PortalItem()
+            id: "00c8181753cd4673810a1ede1f52a922"
+            }
+          }),
+          layers: [layer]
+        });
+
+        var view = new SceneView({
+          container: "viewDiv",
+          map: map,
+          zoom: 5,
+          center: [-99, 39]
+        });
+
+        /*****************************************************************
+         * Listen for events on when the slider values have changed.
+         * When the slider value changes, apply the new value to the
+         * MapImageLayer definitionExpression.
+         *****************************************************************/
+        layer.when(function() {
+          var cities = layer.findSublayerById(0);
+          var slider = document.querySelector(".population-slider");
+          var total = document.querySelector(".total");
+          on(slider, "change", function() {
+            cities.definitionExpression = "pop2000 > " + slider.value;
+          });
+          on(slider, "input", function() {
+            total.innerText = number.format(parseInt(slider.value));
+          });
+        });
+      });
+  </script>
+
+  <style>
+    html,
+    body {
+      font-family: sans-serif;
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #viewDiv {
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 100px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      height: 100px;
+      width: 100%;
+      color: #fff;
+      background-color: #0E3B6F;
+      text-align: center;
+    }
+
+    .population-slider {
+      padding: 0;
+      width: 85%;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div class="footer">
+    <h4>Cities with Population greater than <span class="total">100,000</span></h4>
+    <input class="population-slider" type="range" min="1000" max="1000000" step="100"
+      value="100000">
+  </div>
+</body>
+
+</html>

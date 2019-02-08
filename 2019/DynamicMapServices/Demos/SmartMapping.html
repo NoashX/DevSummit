@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Smart Mapping</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.7/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/MapImageLayer",
+        "esri/Basemap",
+        "esri/renderers/smartMapping/creators/size",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, MapView, MapImageLayer, Basemap, sizeRendererCreator
+      ) {
+
+        /*****************************************************************
+         * Create renderers for each sublayer: cities, highways, states
+         *****************************************************************/
+
+        var citiesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            size: 6,
+            color: {a: 1, b: 200, g: 0, r: 0},
+            style: "circle"
+          },
+          label: "Cities"
+        };
+
+        var statesRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            style: "solid",
+            color: {a: 1, b: 0, g: 0, r: 0},
+            outline: {
+              width: 1,
+              color: {a: 1, b: 0, g: 0, r: 0}
+            }
+          },
+          label: "State boundaries"
+        };
+
+        var highwaysRenderer = {
+          type: "simple", // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-line", // autocasts as new SimpleLineSymbol()
+            style: "solid",
+            width: 1.5,
+            color: {a: 1, b: 10, g: 10, r: 10}
+          },
+          label: "Interstate highway"
+        };
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about US Cities, States and Highways.
+         * Define sublayers with visibility for each layer in Map Service.
+         *****************************************************************/
+
+        var layer = new MapImageLayer({
+          url: "https://ss6dev.arcgisonline.com/arcgis/rest/services/AGP/USA/MapServer",
+          sublayers: [
+          {
+            id: 2,
+            renderer: statesRenderer
+          },
+          {
+            id: 1,
+            renderer: highwaysRenderer
+          },
+          {
+            id: 0,
+            renderer: citiesRenderer
+          }]
+        });
+        
+        
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+
+        var map = new Map({
+          basemap: new Basemap({
+            portalItem: {  // autocasts as new PortalItem()
+              id: "fe0039092fb548a5a20c0b56c5275108"
+            }
+          }),
+          layers: [layer]
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 5,
+          center: [-83.114, 36.921]
+        });
+        
+        view.when(function(){
+          
+          var states = layer.findSublayerById(0);
+        
+          sizeRendererCreator.createContinuousRenderer({
+            layer: states.createFeatureLayer(),
+            field: "pop2000",
+            basemap: "dark-gray",
+            maxValue: 1000000
+          }).then(function(r){
+            states.renderer = r.renderer;
+          });
+          
+        });
+
+      });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

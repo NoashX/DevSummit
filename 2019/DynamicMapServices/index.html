@@ -1,0 +1,641 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Working with Dynamic Map Services in the ArcGIS API for JavaScript</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/esri-dev-summit-2018.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<!-- NOTE: This is a fork from the Esri-approved PPT file here:
+			https://compass.esri.com/org/marketing/DevSummit/Pages/Workshop.aspx
+			We have moved the background images and have formatted the title slide,
+			But other things like alignment of text on subsequent slides may not be
+			in line with the PPT - use this template at your own risk!
+			-->
+			
+			<div class="slides">
+				<section data-background="img/bg-1.png" data-background-size="cover" style="padding-left: 80px;">
+					<h1 style="text-align: left; font-size: 80px;">Working with Dynamic Map Services</h1>
+					<h1 style="text-align: left; font-size: 80px;">in the ArcGIS API for JavaScript</h1>
+					<p style="text-align: left; font-size: 30px;">6:00PM - 6:30PM</p>
+					<p style="text-align: left; font-size: 30px;">Wednesday 03/06/2019</p>
+					<p style="text-align: left; font-size: 30px;">Yann Cabon and Noah Sager</p>
+					<p style="text-align: left; font-size: 30px;"></br></p>
+					<p style="text-align: left; font-size: 30px;"><a href="https://www.youtube.com/watch?v=VDtr7neqE4s" target="_blank">Link To: YouTube Video</a></p>
+					<p style="text-align: left; font-size: 30px;"><a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices" target="_blank">Link To: Online Presentation</a></p>
+					<p style="text-align: left; font-size: 30px;"><a href="https://github.com/NoashX/DevSummit/tree/master/2019/DynamicMapServices/Demos" target="_blank">Link To: Demos</a></p>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/IntroToMapImageLayer.html" target="_blank">Introduction To MapImageLayer</a>
+
+						</br> 
+						MapImageLayer may be created in two ways:</br> 
+						- from a service URL
+						- from an ArcGIS portal item ID
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## 1) Reference a service URL
+				
+						```js
+						require(["esri/layers/MapImageLayer"], function(MapImageLayer){
+						  
+						  // references an ArcGIS Enterprise server Map Service
+						  var layer = new MapImageLayer({
+						    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer"
+						  });
+						  
+						  map.add(layer);  // adds the layer to the map
+						});
+
+						``` 
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-2.png">
+					<textarea data-template>
+						## 2) Reference a portal item ID
+
+						```js
+						require(["esri/layers/MapImageLayer"], function(MapImageLayer){
+						  
+						  // references an ArcGIS Online item pointing to a Map Service, 
+						  // this could also be an ArcGIS Enterprise portal Item
+						  var layer = new MapImageLayer({
+						    portalItem: {  // autocasts as new PortalItem
+						      id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+						    }
+						  });
+
+						  map.add(layer);  // adds the layer to the map
+						});
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/LayerList_with_IntroToMapImageLayer.html" target="_blank">LayerList and Legend Widgets with MapImageLayer</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## LayerList Widget
+
+						```js
+						view.when(function() {
+
+							var layerList = new LayerList({
+								view: view
+							});
+
+							//Add LayerList widget to the top right corner of the view
+							view.ui.add(layerList, "top-right");
+						});
+						```				    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## Legend Widget
+
+						```js
+						view.when(function() {
+						
+							var legend = new Legend({
+								view: view
+							});
+
+							//Add Legend widget to the bottom left corner of the view
+							view.ui.add(legend, "bottom-left");
+						});
+						```				    
+				        
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/RenderersOnSublayerFromPortal.html" target="_blank">Renderers On Sublayer</a>
+			
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+						## Renderers On Sublayer 
+				
+						```js
+                        var statesRenderer = {
+				          type: "simple", // autocasts as new SimpleRenderer()
+				          symbol: {
+				            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+				            style: "solid",
+				            color: {a: 1, b: 0, g: 0, r: 0},
+				          }
+				        };
+
+                        var layer = new MapImageLayer({
+				          portalItem: { id: "e7e03ad8f72b42709e7d63dde8c6c3f5"},
+				          sublayers: [{
+				            id: 2,
+				            renderer: statesRenderer
+				          }]
+				        });
+						```
+					</textarea>
+				</section>
+
+
+				<section data-markdown data-background="img/bg-5.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DefinitionExpressionFromPortal.html" target="_blank">Definition Expression On Sublayer</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-5.png">
+					<textarea data-template>
+						## Definition Expression on Sublayer
+				
+						```js
+						var layer = new MapImageLayer({
+							portalItem: {  // autocasts as new PortalItem()
+								id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+							},
+							sublayers: [
+							{
+								id: 0,
+								visible: true,
+								renderer: citiesRenderer,
+								definitionExpression: "pop2000 > 100000"
+							}]
+						});
+						```	
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-6.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/ToggleSublayersFromPortal.html" target="_blank">Layer From Workspace + Toggle Sublayers</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-6.png">
+					<textarea data-template>
+						## Layer From Workspace + Toggle Sublayers
+
+						```js
+						sublayers: [
+						{
+							id: 4,
+							visible: false,
+							title: "Railroads",
+							renderer: railroadsRenderer,
+							source: {  // indicates the source of the sublayer is a dynamic data layer
+							type: "data-layer",
+							// this object defines the data source of the layer (feature class table from a file geodatabase)
+							dataSource: {
+								type: "table",
+								workspaceId: "MyDatabaseWorkspaceIDSSR2",  // workspace name
+								dataSourceName: "ss6.gdb.Railroads"  // table name
+							}
+						}]
+						```
+				
+					</textarea>
+				</section>
+
+
+				<section data-markdown data-background="img/bg-7.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/LabelSublayersFromPortal.html" target="_blank">Label Sublayers</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-7.png">
+					<textarea data-template>
+						## Label Sublayers
+						
+						```js
+                sublayers: [{
+		          id: 3,
+		          labelsVisible: true,
+		          labelingInfo: [{  // labelingInfo autocasts to an array of LabelClass objects
+		            labelExpression: "[name]",
+		            labelPlacement: "always-horizontal",
+		            symbol: {
+		              type: "text", // autocasts as new TextSymbol()
+		              color: [255, 255, 255, 0.7],
+		              haloColor: [0, 0, 0, 0.7],
+		              haloSize: 1,
+		              font: { size: 11 }
+		            }
+		          }]
+		        }]
+				        ```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/PopupsOnRenderersOnSublayerFromPortal.html" target="_blank">Popups on Sublayers</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## Popups on Sublayers
+				
+						```js
+        sublayers: [
+          {
+            id: 0,
+            renderer: citiesRenderer,
+            opacity: 0.6,
+            popupTemplate: {
+              title: "{areaname}",
+              content: "{pop2000} people call the city of {areaname},{st} home"
+            }
+          }]
+				        ```
+
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-7.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicMapLayersFromEnterprise.html" target="_blank">Dynamic Layers From Enterprise</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-7.png">
+					<textarea data-template>
+						## Dynamic Layers From Enterprise
+				
+						```js
+    var layer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+        title: "Census Demographics",
+        sublayers: [{
+          id: 0,
+          title: "Population/square mile",
+          renderer: populationRenderer,
+          visible: true,
+          // points to the block groups layer
+          source: {
+            mapLayerId: 1
+          }
+        }]
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicDataLayerWithQueryTable.html" target="_blank">Dynamic Layer with Query Table</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## Dynamic Layer with Query Table
+				
+						```js
+    var layer = new MapImageLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+        sublayers: [{
+          title: "Places",
+          id: 0,
+          source: {  // indicates the source of the sublayer is a dynamic data layer
+            type: "data-layer",
+            // this object defines the data source of the layer
+            // in this case it's a table that will be queried using a SQL WHERE clause
+            dataSource: {
+              type: "query-table",
+              workspaceId: "MyDatabaseWorkspaceIDSSR2",
+              query: queryString + document.getElementById(
+                "layer-select").value,
+              oidFields: "objectid"
+            }
+          }
+        }]
+    });
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicDataLayerWithTableJoin.html" target="_blank">Dynamic Layer with Table Join</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## Dynamic Layer with Table Join
+				
+						```js
+    var layer = new MapImageLayer({
+      url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+      title: "United States Population",
+      sublayers: [{
+        title: "Share of population with Norwegian Ancestry",
+        id: 0,
+        opacity: 0.75,
+        source: {
+          // indicates the source of the sublayer is a dynamic data layer
+          type: "data-layer",
+          // this object defines the data source of the layer
+          // in this case it's a joined table
+          dataSource: {
+            type: "join-table",
+            // for joined tables you need to define a left table source
+            // and a right table source. In this case, the left table
+            // is the map layer containing feature geometries. The ID
+            // is the layer ID of the sublayer in the service.
+            leftTableSource: {
+              type: "map-layer",
+              mapLayerId: 3
+            },
+            // The right table source is another data layer object.
+            // In this case it is a plain table that resides in the
+            // workspace. Simply indicate the ID of the workspace and
+            // the name of the table
+            rightTableSource: {
+              type: "data-layer",
+              dataSource: {
+                type: "table",
+                workspaceId: "CensusFileGDBWorkspaceID",
+                dataSourceName: "ancestry"
+              }
+            },
+            // For the joint to be complete, you must indicate the
+            // primary key and the foreign key to match the table
+            // records from each respective source. In this case
+            // we will match table records with the state name.
+            // So we must indicate the field in each table containing
+            // the state name.
+            leftTableKey: "STATE_NAME",
+            rightTableKey: "State",
+            // Indicates the join type. In this case all records from
+            // the map layer are retained even if they don't have
+            // matching records in the ancestry table.
+            joinType: "left-outer-join"
+          }
+        },
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicDataLayerWithRaster.html" target="_blank">Dynamic Layer with Raster Data</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## Dynamic Layer with Raster Data
+				
+						```js
+var layer = new MapImageLayer({
+  url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/GlacierBay/MapServer",
+  minScale: 2000000,
+  sublayers: [{
+    id: 1,
+    title: "hillshade",
+    source: {
+      // indicates the source of the sublayer is a dynamic data layer
+      type: "data-layer",
+      // this object defines the data source of the layer
+      // in this case it's a raster located in a registered workspace
+      dataSource: {
+        type: "raster",
+        workspaceId: "GlacierBayID",
+        dataSourceName: "gb_hillshade"
+      }
+    }
+  }, {
+    id: 0,
+    title: "dem"
+  }]
+});
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/SizeVisualVariable.html" target="_blank">Visual Variables</a>
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-9.png">
+					<textarea data-template>
+						## Visual Variables
+				
+						```js
+                    var renderer = {
+				        type: "simple",  // autocasts as new SimpleRenderer()
+				        symbol: {
+				          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+				          outline: {  // autocasts as new SimpleLineSymbol()
+				            color: "lightgray",
+				            width: 0.5
+				          }
+				        },
+				        label: "Population",
+				        visualVariables: [{
+				          type: "size",
+				          field: "pop2000",  // population
+				          stops: [
+				          {
+				            value: 8000,
+				            size: 4,
+				            label: "0 - 8,000"
+				          },
+				          {
+				            value: 125000,
+				            size: 12,
+				            label: "8,001 - 125,000"
+				          },
+				          {
+				            value: 325000,
+				            size: 24,
+				            label: "125,001 - 325,000"
+				          },
+				          {
+				            value: 500000,
+				            size: 36,
+				            label: "325,001+"
+				          }]
+				        }, {
+				          type: "color",
+				          field: "pop2000",  // population
+				          stops: [
+				            {
+				            value: 8000,
+				            color: "#ADD8E6"
+				          },
+				          {
+				            value: 125000,
+				            color: "#5f5fd8"
+				          },
+				          {
+				            value: 325000,
+				            color: "#2d2dd4"
+				          },
+				          {
+				            value: 500000,
+				            color: "#020260"
+				          }]
+				        }]
+				      };
+      ```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-8.png">
+					<textarea data-template>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/SmartMapping.html" target="_blank">Smart Mapping</a>
+						(coming soon)
+
+					</textarea>
+				</section>
+				
+
+				<section data-markdown data-background="img/bg-8.png">
+					<textarea data-template>
+						## Smart Mapping
+
+						```js
+                require(["esri/renderers/smartMapping/creators/size"],
+			    function(sizeRendererCreator) {
+
+                    view.when(function(){
+      
+			          var states = layer.findSublayerById(0);
+			        
+			          sizeRendererCreator.createContinuousRenderer({
+			            layer: states.createFeatureLayer(),
+			            field: "pop2000",
+			            basemap: "dark-gray",
+			            maxValue: 1000000
+			          }).then(function(r){
+			            states.renderer = r.renderer;
+			          });
+			          
+			        });
+			    }
+						```
+					</textarea>
+				</section>
+				
+
+				<section data-markdown data-background="img/bg-8.png">
+					<textarea data-template>
+						## sublayers
+
+						```js
+						var layer = new MapImageLayer({
+						  url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+						  sublayers: [{
+						     id: 2,
+						     visible: false
+						   }, {
+						     id: 1,
+						     visible: true
+						  }]
+						});
+						```
+						## allSublayers
+						```js
+// finds one sublayer from a parent sublayer of the MapImageLayer 
+						var tractsId = 5;
+						var tracksSublayer = layer.allSublayers.find(function(sublayer){
+						  return sublayer.id === tracksId;
+						});
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-4.png">
+					<textarea data-template>
+
+						## Questions?
+						Help us to improve by filling out the survey
+					</br></br>
+
+						<img src="img/survey-slide.png" style="margin: 0; background: none; border: 0px; box-shadow: none;">
+				
+					</textarea>
+				</section>
+
+				<section data-markdown data-background="img/bg-final.jpg">
+					<textarea data-template>
+						<img src="img/esri-science-logo-white.png" style="margin: 0; background: none; border: 0px; box-shadow: none;" />
+					</textarea>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				// This height and width are here for the left-aligned title slide. 
+				// If you do not want that, you can remove these two settings and
+				// the presentation will be closer to OOTB-Reveal.js:
+				width: '100%',
+				height: '100%',
+
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

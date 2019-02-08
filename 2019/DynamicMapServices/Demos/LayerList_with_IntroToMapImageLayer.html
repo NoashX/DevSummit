@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>LayerList and Legend Widgets</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.6/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+        "esri/Map",
+        "esri/views/SceneView",
+        "esri/layers/MapImageLayer",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "dojo/domReady!"
+      ],
+      function(
+        Map, SceneView, MapImageLayer, LayerList, Legend
+      ) {
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about pool permits in Southern California.
+         *****************************************************************/
+        var permitsLyr = new MapImageLayer({
+          portalItem: {  // autocasts as new PortalItem()
+            id: "e7e03ad8f72b42709e7d63dde8c6c3f5"
+          }
+        });
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+        var map = new Map({
+          basemap: "gray",
+          layers: [permitsLyr]
+        });
+
+        var view = new SceneView({
+          container: "viewDiv",
+          map: map
+        });
+
+        view.when(function() {
+          var layerList = new LayerList({
+            view: view
+          });
+
+          // Add LayerList widget to the top right corner of the view
+          view.ui.add(layerList, "top-right");
+
+          var legend = new Legend({
+            view: view
+          });
+
+          // Add Legend widget to the bottom left corner of the view
+          view.ui.add(legend, "bottom-left");
+        });
+
+        /*****************************************************************
+         * Animate to the layer's full extent when the layer loads.
+         *****************************************************************/
+        permitsLyr.when(function() {
+          view.goTo(permitsLyr.fullExtent);
+        });
+      });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>
