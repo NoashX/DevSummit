@@ -25,10 +25,11 @@
         "esri/views/MapView",
         "esri/layers/MapImageLayer",
         "esri/Basemap",
-        "esri/renderers/smartMapping/creators/size"
+        "esri/renderers/smartMapping/creators/size",
+        "esri/widgets/Legend"
       ],
       function(
-        Map, MapView, MapImageLayer, Basemap, sizeRendererCreator
+        Map, MapView, MapImageLayer, Basemap, sizeRendererCreator, Legend
       ) {
 
         /*****************************************************************
@@ -51,7 +52,7 @@
           symbol: {
             type: "simple-fill", // autocasts as new SimpleFillSymbol()
             style: "solid",
-            color: {a: 1, b: 0, g: 0, r: 0},
+            color: {a: 1, b: 0, g: 75, r: 0},
             outline: {
               width: 1,
               color: {a: 1, b: 0, g: 0, r: 0}
@@ -78,7 +79,7 @@
          *****************************************************************/
 
         var layer = new MapImageLayer({
-          url: "https://ss6dev.arcgisonline.com/arcgis/rest/services/AGP/USA/MapServer",
+          url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
           sublayers: [
           {
             id: 2,
@@ -118,16 +119,29 @@
         
         view.when(function(){
           
-          var states = layer.findSublayerById(0);
-        
+          var citiesSublayer = layer.findSublayerById(0);
+          var cities = citiesSublayer.createFeatureLayer();
+
           sizeRendererCreator.createContinuousRenderer({
-            layer: states.createFeatureLayer(),
+            layer: cities,
             field: "pop2000",
             basemap: "dark-gray",
+            minValue: 10000,
             maxValue: 1000000
           }).then(function(r){
-            states.renderer = r.renderer;
+            citiesSublayer.renderer = r.renderer;
+            var legend = new Legend({
+              view: view/*,
+              layerInfos: [
+              {
+                layer: cities,
+                title: "Population of U.S. cities"
+              }]*/
+            });
+            view.ui.add(legend, "bottom-right");
           });
+
+          
           
         });
 

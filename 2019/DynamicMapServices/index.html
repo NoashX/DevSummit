@@ -93,6 +93,35 @@
 					</textarea>
 				</section>
 
+
+				<section data-markdown data-background="img/bg-3.png">
+					<textarea data-template>
+						## sublayers
+
+						```js
+						var layer = new MapImageLayer({
+						  url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
+						  sublayers: [{
+						     id: 2,
+						     visible: false
+						   }, {
+						     id: 1,
+						     visible: true
+						  }]
+						});
+						```
+						## allSublayers
+						```js
+// finds one sublayer from a parent sublayer of the MapImageLayer 
+						var tractsId = 5;
+						var tracksSublayer = layer.allSublayers.find(function(sublayer){
+						  return sublayer.id === tracksId;
+						});
+						```
+					</textarea>
+				</section>
+
+
 				<section data-markdown data-background="img/bg-6.png">
 					<textarea data-template>
 						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/LayerList_with_IntroToMapImageLayer.html" target="_blank">LayerList and Legend Widgets with MapImageLayer</a>
@@ -201,39 +230,6 @@
 
 				<section data-markdown data-background="img/bg-6.png">
 					<textarea data-template>
-						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/ToggleSublayersFromPortal.html" target="_blank">Layer From Workspace + Toggle Sublayers</a>
-				
-					</textarea>
-				</section>
-
-				<section data-markdown data-background="img/bg-3.png">
-					<textarea data-template>
-						## Layer From Workspace + Toggle Sublayers
-
-						```js
-						sublayers: [
-						{
-							id: 4,
-							visible: false,
-							title: "Railroads",
-							renderer: railroadsRenderer,
-							source: {  // indicates the source of the sublayer is a dynamic data layer
-							type: "data-layer",
-							// this object defines the data source of the layer (feature class table from a file geodatabase)
-							dataSource: {
-								type: "table",
-								workspaceId: "MyDatabaseWorkspaceIDSSR2",  // workspace name
-								dataSourceName: "ss6.gdb.Railroads"  // table name
-							}
-						}]
-						```
-				
-					</textarea>
-				</section>
-
-
-				<section data-markdown data-background="img/bg-6.png">
-					<textarea data-template>
 						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/LabelSublayersFromPortal.html" target="_blank">Label Sublayers</a>
 				
 					</textarea>
@@ -292,68 +288,39 @@
 
 				<section data-markdown data-background="img/bg-6.png">
 					<textarea data-template>
-						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicMapLayersFromEnterprise.html" target="_blank">Dynamic Layers From Enterprise</a>
+						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/ToggleSublayersFromPortal.html" target="_blank">Layer From Workspace + Toggle Sublayers</a>
+						
+						#### <a href="https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer" target="_blank">https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer</a>
 				
 					</textarea>
 				</section>
 
 				<section data-markdown data-background="img/bg-3.png">
 					<textarea data-template>
-						## Dynamic Layers From Enterprise
-				
+						## Layer From Workspace + Toggle Sublayers
+
 						```js
-    var layer = new MapImageLayer({
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
-        title: "Census Demographics",
-        sublayers: [{
-          id: 0,
-          title: "Population/square mile",
-          renderer: populationRenderer,
-          visible: true,
-          // points to the block groups layer
-          source: {
-            mapLayerId: 1
-          }
-        }]
+						sublayers: [
+						{
+							id: 4,
+							visible: false,
+							title: "Railroads",
+							renderer: railroadsRenderer,
+							source: {  // indicates the source of the sublayer is a dynamic data layer
+							type: "data-layer",
+							// this object defines the data source of the layer (feature class table from a file geodatabase)
+							dataSource: {
+								type: "table",
+								workspaceId: "MyDatabaseWorkspaceIDSSR2",  // workspace name
+								dataSourceName: "ss6.gdb.Railroads"  // table name
+							}
+						}]
 						```
-					</textarea>
-				</section>
-
-				<section data-markdown data-background="img/bg-6.png">
-					<textarea data-template>
-						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicDataLayerWithQueryTable.html" target="_blank">Dynamic Layer with Query Table</a>
 				
 					</textarea>
 				</section>
 
-				<section data-markdown data-background="img/bg-3.png">
-					<textarea data-template>
-						## Dynamic Layer with Query Table
 				
-						```js
-    var layer = new MapImageLayer({
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
-        sublayers: [{
-          title: "Places",
-          id: 0,
-          source: {  // indicates the source of the sublayer is a dynamic data layer
-            type: "data-layer",
-            // this object defines the data source of the layer
-            // in this case it's a table that will be queried using a SQL WHERE clause
-            dataSource: {
-              type: "query-table",
-              workspaceId: "MyDatabaseWorkspaceIDSSR2",
-              query: queryString + document.getElementById(
-                "layer-select").value,
-              oidFields: "objectid"
-            }
-          }
-        }]
-    });
-						```
-					</textarea>
-				</section>
-
 				<section data-markdown data-background="img/bg-6.png">
 					<textarea data-template>
 						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/DynamicDataLayerWithTableJoin.html" target="_blank">Dynamic Layer with Table Join</a>
@@ -456,82 +423,12 @@ var layer = new MapImageLayer({
 					</textarea>
 				</section>
 
+				
 				<section data-markdown data-background="img/bg-2.png">
 					<textarea data-template>
-						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/SizeVisualVariable.html" target="_blank">Visual Variables</a>
-				
-					</textarea>
-				</section>
+						## Smart Mapping and Visual Variables?
 
-				<section data-markdown data-background="img/bg-3.png">
-					<textarea data-template>
-						## Visual Variables
-				
-						```js
-                    var renderer = {
-				        type: "simple",  // autocasts as new SimpleRenderer()
-				        symbol: {
-				          type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-				          outline: {  // autocasts as new SimpleLineSymbol()
-				            color: "lightgray",
-				            width: 0.5
-				          }
-				        },
-				        label: "Population",
-				        visualVariables: [{
-				          type: "size",
-				          field: "pop2000",  // population
-				          stops: [
-				          {
-				            value: 8000,
-				            size: 4,
-				            label: "0 - 8,000"
-				          },
-				          {
-				            value: 125000,
-				            size: 12,
-				            label: "8,001 - 125,000"
-				          },
-				          {
-				            value: 325000,
-				            size: 24,
-				            label: "125,001 - 325,000"
-				          },
-				          {
-				            value: 500000,
-				            size: 36,
-				            label: "325,001+"
-				          }]
-				        }, {
-				          type: "color",
-				          field: "pop2000",  // population
-				          stops: [
-				            {
-				            value: 8000,
-				            color: "#ADD8E6"
-				          },
-				          {
-				            value: 125000,
-				            color: "#5f5fd8"
-				          },
-				          {
-				            value: 325000,
-				            color: "#2d2dd4"
-				          },
-				          {
-				            value: 500000,
-				            color: "#020260"
-				          }]
-				        }]
-				      };
-      ```
-					</textarea>
-				</section>
-
-				<section data-markdown data-background="img/bg-2.png">
-					<textarea data-template>
-						## <a href="https://noashx.github.io/DevSummit/2019/DynamicMapServices/Demos/SmartMapping.html" target="_blank">Smart Mapping</a>
-						(coming soon)
+						### createFeatureLayer()
 
 					</textarea>
 				</section>
@@ -563,43 +460,15 @@ var layer = new MapImageLayer({
 						```
 					</textarea>
 				</section>
-				
 
-				<section data-markdown data-background="img/bg-3.png">
-					<textarea data-template>
-						## sublayers
-
-						```js
-						var layer = new MapImageLayer({
-						  url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer",
-						  sublayers: [{
-						     id: 2,
-						     visible: false
-						   }, {
-						     id: 1,
-						     visible: true
-						  }]
-						});
-						```
-						## allSublayers
-						```js
-// finds one sublayer from a parent sublayer of the MapImageLayer 
-						var tractsId = 5;
-						var tracksSublayer = layer.allSublayers.find(function(sublayer){
-						  return sublayer.id === tracksId;
-						});
-						```
-					</textarea>
-				</section>
 
 				<section data-markdown data-background="img/bg-rating.png">
 					<textarea data-template>
 					</textarea>
 				</section>
 
-				<section data-markdown data-background="img/bg-esri.jpg">
+				<section data-markdown data-background="img/bg-esri.png">
 					<textarea data-template>
-						<img src="img/esri-science-logo-white.png" style="margin: 0; background: none; border: 0px; box-shadow: none;" />
 					</textarea>
 				</section>
 			</div>
