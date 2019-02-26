@@ -14,7 +14,8 @@ Kelly Hutchins and Noah Sager
  - Why use TypeScript?
  - Setup and First steps
  - Live Action Demo
- 
+ - Where can I get more info?
+
 ----
 
 ### **What is TypeScript?**
