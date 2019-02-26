@@ -76,11 +76,15 @@ Makes use of the latest JavaScript features
 <br></br>
 1. The recommended way to install TypeScript is via `Node` and `npm`.
 <br></br>
-2. Make sure to install TypeScript globally: <br></br>
-`npm install -g typescript`.
+2. Make sure to install TypeScript globally: <br>
+<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim> 
+npm install -g typescript
+</code></pre>
 <br></br>
-3. Install the ArcGIS API for JavaScript Typings: <br></br>
-`npm install --save @types/arcgis-js-api`.
+3. Install the ArcGIS API for JavaScript Typings: <br>
+<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim> 
+npm install --save @types/arcgis-js-api
+</code></pre>
 <br></br>
 
 ----
