@@ -14,59 +14,79 @@ Kelly Hutchins and Noah Sager
  - Why use TypeScript?
  - Setup and First steps
  - Live Action Demo
-
+ 
 ----
 
-### **Where do I begin?**
-<a href="https://developers.arcgis.com/javascript/" target="_blank">
-<img src="Images/landingPage_3.png" alt="JavaScript landing page" width="1284" height="630">
+### **What is TypeScript?**
+<a href="https://www.typescriptlang.org/" target="_blank">
+<img style="float:bottom;" src="Images/TypeScript_Superset_JavaScript.png" alt="TypeScript_Superset_JavaScript">
 </a>
 
 ----
 
-### **Which version of the API is best?**
-<a href="https://developers.arcgis.com/javascript/latest/guide/choose-version/index.html" target="_blank">
-<img src="Images/Choose_Your_Own_Version.png" alt="API functionality matrix" width="1206" height="651">
+### **Where do I begin?**
+<a href="https://www.typescriptlang.org/" target="_blank">
+<img src="Images/TS.png" alt="TypeScript landing page" width="1037" height="516">
 </a>
 
 ----
 
 ### **Developer Setup**
 </br>
-<a href="https://www.slant.co/topics/1686/~javascript-ides-or-editors" target="_blank">
-<img src="Images/ides.png" alt="IDEs" width="806" height="443">
+<a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
+<img style="float:bottom;" src="Images/Setup_TS.png" alt="Setup_TS">
 </a>
 
 ----
 
-### **JSAPI Resources**
+### **Why use TypeScript?**
 </br>
-<a href="https://github.com/Esri/jsapi-resources" target="_blank">
-<img style="float: right;" alt="JSAPI resources" src="Images/jsapiResources_2.png" width="790" height="577">
-</a>
- - Includes
-   - JSHint file
-   - TypeScript definition file
-   - Build tools, e.g. Bower
-   - OAuth popup callback
+TypeScript adds `type` support to JavaScript
+</br>
+<img style="float:bottom;" src="Images/addFeatureLayer_TS.png" alt="TypeScript_Example1">
 
 ----
 
-### **Get the API**
+### **Why use TypeScript?**
 </br>
- - <a href="https://developers.arcgis.com/javascript/latest/guide/get-api/index.html#cdn" target="_blank">CDN</a>
- - Custom builds
- - <a href="https://developers.arcgis.com/downloads/" target="_blank">Download builds</a>
+Enhanced IDE support
 </br>
+<img style="float:bottom;" src="Images/addFeatureLayer_TS_error.png" alt="TypeScript_Example2">
+
+----
+
+### **Why use TypeScript?**
 </br>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim> 
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/4.10/esri/css/main.css&quot;&gt; 
-&lt;script src=&quot;https://js.arcgis.com/4.10/&quot;&gt;&lt;/script&gt;
-</code></pre>
+Makes use of the latest JavaScript features
+</br>
+<img style="float:bottom;" src="Images/promise_async_await.png" alt="TypeScript_Example3">
+
+----
+
+### **Why use TypeScript?**
+</br>
+Makes use of the latest JavaScript features
+</br>
+<img style="float:bottom;" src="Images/dynamicImport.png" alt="TypeScript_Example4">
+
+----
+
+### **Setup and First steps**
+<br></br>
+1. The recommended way to install TypeScript is via `Node` and `npm`.
+<br></br>
+2. Make sure to install TypeScript globally: <br></br>
+`npm install -g typescript`.
+<br></br>
+3. Install the ArcGIS API for JavaScript Typings: <br></br>
+`npm install --save @types/arcgis-js-api`.
+<br></br>
 
 ----
 
 ### **Demo: Build a TypeScript app from scratch**
+
+<img style="float:bottom;" src="Images/KellyH.png" alt="Kelly_Hutchins">
 
 ----
 
@@ -74,11 +94,11 @@ Kelly Hutchins and Noah Sager
 
 - SDK Documentation
 - Esri-related training and webinars
-- JavaScript online training, free and not-so-free
-- User forums, e.g. GeoNet, StackExchange, Spatial Community in Slack, etc.</br>
+- ArcGIS Blogs
+- GeoNet, StackExchange, Spatial Community in Slack, etc.</br>
 </br>
-<a href="https://developers.arcgis.com/javascript/support/index.html" target="_blank">
-<img style="float:bottom;" src="Images/4dot10_Support.png" alt="4dot10_Support" width="744" height="384">
+<a href="https://www.esri.com/arcgis-blog/products/js-api-arcgis/mapping/using-typescript-with-the-arcgis-api-for-javascript/" target="_blank">
+<img style="float:bottom;" src="Images/Using_TS_blog.png" alt="Using_TS_blog">
 
 ----
 
