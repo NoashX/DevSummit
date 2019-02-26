@@ -6,6 +6,12 @@
 ### Intro to TypeScript
 <br>
 Kelly Hutchins and Noah Sager
+</br>
+</br>
+Presentation:
+</br>
+<a href="https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript" target="_blank">https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript</a>
+ 
 ----
 
 ### **Agenda**
