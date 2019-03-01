@@ -11,7 +11,7 @@ Kelly Hutchins and Noah Sager
 Presentation:
 </br>
 <a href="https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript" target="_blank">https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript</a>
- 
+
 ----
 
 ### **Agenda**
@@ -83,12 +83,12 @@ Makes use of the latest JavaScript features
 1. The recommended way to install TypeScript is via `Node` and `npm`.
 <br></br>
 2. Make sure to install TypeScript globally: <br>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim> 
+<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim>
 npm install -g typescript
 </code></pre>
 <br></br>
 3. Install the ArcGIS API for JavaScript Typings: <br>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim> 
+<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim>
 npm install --save @types/arcgis-js-api
 </code></pre>
 <br></br>
@@ -99,6 +99,39 @@ npm install --save @types/arcgis-js-api
 
 <img style="float:bottom;" src="Images/KellyH.png" alt="Kelly_Hutchins">
 
+----
+### **Tip: Hide .js and .jsmap files **
+
+- Reduce clutter
+- VSCode: Add below to user preferences in files.exclude
+
+```
+ **/*.js.map": true,
+        "**/*.js": {
+            "when": "$(basename).ts
+
+```
+
+----
+### **Tip: Debugging with source maps**
+  - Enable source maps in browser dev tools
+  - Set breakpoints in .ts instead of .js
+
+  ![JS Code](images/transpiled.png)
+
+----
+### **Tip: Use __esri instead of import**
+- Only contains type interfaces
+- Can use when not instantiating type
+```
+import esri = __esri;
+const layerList = new LayerList({
+  view,
+  listItemCreatedFunction: event => {
+    const item = event.item as __esri.ListItem;
+  }
+});
+```
 ----
 
 ### **Where can I get more info?**
