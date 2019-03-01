@@ -117,7 +117,7 @@ npm install --save @types/arcgis-js-api
   - Enable source maps in browser dev tools
   - Set breakpoints in .ts instead of .js
 
-  ![JS Code](images/transpiled.png)
+  ![JS Code](Images/transpiled.png)
 
 ----
 ### **Tip: Use __esri instead of import**
