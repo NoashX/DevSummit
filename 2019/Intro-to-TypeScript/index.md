@@ -50,7 +50,7 @@ Presentation:
 </br>
 TypeScript adds `type` support to JavaScript
 </br>
-<img style="float:bottom;" src="Images/addFeatureLayer_TS.png" alt="TypeScript_Example1">
+<img src="Images/addFeatureLayer_TS.png" alt="TypeScript_Example1" width="1538" height="454">
 
 ----
 
@@ -58,7 +58,7 @@ TypeScript adds `type` support to JavaScript
 </br>
 Enhanced IDE support
 </br>
-<img style="float:bottom;" src="Images/addFeatureLayer_TS_error.png" alt="TypeScript_Example2">
+<img src="Images/addFeatureLayer_TS_error.png" alt="TypeScript_Example2" width="1556" height="466">
 
 ----
 
@@ -66,7 +66,7 @@ Enhanced IDE support
 </br>
 Makes use of the latest JavaScript features
 </br>
-<img style="float:bottom;" src="Images/promise_async_await.png" alt="TypeScript_Example3">
+<img src="Images/promise_async_await.png" alt="TypeScript_Example3" width="1700" height="646">
 
 ----
 
@@ -74,7 +74,7 @@ Makes use of the latest JavaScript features
 </br>
 Makes use of the latest JavaScript features
 </br>
-<img style="float:bottom;" src="Images/dynamicImport.png" alt="TypeScript_Example4">
+<img src="Images/dynamicImport.png" alt="TypeScript_Example4" width="1150" height="336">
 
 ----
 
