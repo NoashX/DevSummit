@@ -1,52 +1,63 @@
-## Live Demo Script
-
-In this demo we are going to convert the [Add a legend to a layer list](https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=widgets-layerlist-legend) sample from JavaScript to TypeScript.
-
-1. First let's create a package.json file. This is a file that lists all the packages your project depends on. This file can be created via the cli by answering some questions or just by typing `npm init --yes` to accept the default values.
-
-*Note*: Additional info can be found in the [package.json](https://docs.npmjs.com/creating-a-package-json-file) doc.
-
-2. Install the typings for the ArcGIS API for JavaScript. In this demo we are working with version 4.x. Typings are also available for version 3.x of the api. To install the typings type `npm install --save @types/arcgis-js-api` at the command line.
-
-*Note*:The typings files provide typescript with type information about an api that is written in JavaScript.
-
-3. Create a tsconfig.json file. This file specifies root files and complier options for TypeScript. See the [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) doc for details on options.
+## Demo app for TypeScript Demo Theater
 
 
-4. Create application structure. We'll create an app folder that will contain our typescript files.
-
-
-5. Create tsconfig file to define compiler options for typescript
+# JavaScript code converted to TypeScript 
 ```
-{
-  "compilerOptions": {
-    "lib": ["dom", "es2015.promise", "es5"],
-    "module": "amd", // output files as AMD modules
-    "sourceMap": true,
-    "target": "es5",
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "esModuleInterop": true
-  }
+import FeatureLayer from "esri/layers/FeatureLayer";
+import Map from "esri/Map";
+import MapView from "esri/views/MapView";
+import { geodesicLength } from "esri/geometry/geometryEngine";
+
+// Create the Map
+var map = new Map({
+  basemap: "gray"
+});
+
+// Create the MapView
+var view = new MapView({
+  container: "viewDiv",
+  map,
+  center: [-117.08, 34.1],
+  zoom: 12
+});
+
+// Add this action to the popup so it is always available in this view
+var measureThisAction = {
+  title: "Measure Length",
+  id: "measure-this",
+  className: "esri-icon-measure"
+} as __esri.ActionButton;
+
+var popupTemplate = {
+  title: "Trail run",
+  content: "{name}",
+  actions: [measureThisAction]
+};
+
+var featureLayer = new FeatureLayer({
+  url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/TrailRuns/FeatureServer/0",
+  outFields: ["*"],
+  popupTemplate
+});
+map.add(featureLayer);
+
+// Execute each time the "Measure Length" is clicked
+function measureThis() {
+  var geom = view.popup.selectedFeature.geometry;
+  var distance = geodesicLength(geom, "miles");
+  distance = parseFloat((Math.round(distance * 100) / 100).toFixed(2));
+  view.popup.content = `${view.popup.selectedFeature.attributes.name} ${distance} miles`;
 }
 
+// Event handler that fires each time an action is clicked.
+view.popup.on("trigger-action", function (event) {
+  // Execute the measureThis() function if the measure-this action is clicked
+  if (event.action.id === "measure-this") {
+    measureThis();
+  }
+});
+
+
+
+
 ```
-  - esModuleInterop lets us use `import WebMap from "esri/WebMap` instead of 'import requires'
-  - For custom widgets you'll want to set jsx and jsxFactory.
-  ```
-    "jsx": "react",
-    "jsxFactory": "tsx",
-  ```
-
-6. Copy over code from sample
-  - Copy/paste javascript into .ts file
-  - Modify requires to import
-  ```import WebMap from "esri/WebMap";```
-  - Transpile with `tsc` and test. At this point it should work.
-  - Take a quick look at output JavaScript
-  - Demo code assist
-  - Optionally do a few [es6](https://codeburst.io/javascript-wtf-is-es6-es8-es-2017-ecmascript-dca859e4821c) things.
-      - Shorthand property names
-      - Fat arrow functions. More info on these can be found [here](https://codeburst.io/javascript-arrow-functions-for-beginners-926947fc0cdc)
-
-
