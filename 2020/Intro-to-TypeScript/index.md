@@ -1,16 +1,19 @@
 <!-- .slide: data-background="../reveal.js/img/background.jpg" -->
 <!-- .slide: class="title" -->
 <br>
+## Intro to TypeScript
 <br>
-<br>
-### Intro to TypeScript
-<br>
-Kelly Hutchins and Noah Sager
+<b>Kelly Hutchins and Noah Sager</b>
+</br>
 </br>
 </br>
 Presentation:
 </br>
 <a href="https://noashx.github.io/DevSummit/2020/Intro-to-TypeScript" target="_blank">https://noashx.github.io/DevSummit/2020/Intro-to-TypeScript</a>
+</br>
+</br>
+</br>
+<small>Wednesday, March 11, 2020, 11:15am - 11:45am, Demo Theater 2</small>
 
 ----
 
@@ -38,17 +41,19 @@ Presentation:
 
 ----
 
-### **Developer Setup**
+### **Where do I begin?**
 </br>
 <a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
-<img style="float:bottom;" src="Images/Setup_TS.png" alt="Setup_TS">
+<img align="top" src="Images/Setup_TS.png" alt="Setup_TS" style="height:500px;">
 </a>
+</br>
 
 ----
 
 ### **Why use TypeScript?**
 </br>
 TypeScript adds `type` support to JavaScript
+</br>
 </br>
 <img src="Images/addFeatureLayer_TS.png" alt="TypeScript_Example1" width="1538" height="454">
 
@@ -58,6 +63,7 @@ TypeScript adds `type` support to JavaScript
 </br>
 Enhanced IDE support
 </br>
+</br>
 <img src="Images/addFeatureLayer_TS_error.png" alt="TypeScript_Example2" width="1556" height="466">
 
 ----
@@ -66,7 +72,8 @@ Enhanced IDE support
 </br>
 Makes use of the latest JavaScript features
 </br>
-<img src="Images/promise_async_await.png" alt="TypeScript_Example3" width="1700" height="646">
+</br>
+<img src="Images/promise_async_await.png" alt="TypeScript_Example3" width="1275" height="485">
 
 ----
 
@@ -74,7 +81,16 @@ Makes use of the latest JavaScript features
 </br>
 Makes use of the latest JavaScript features
 </br>
+</br>
 <img src="Images/dynamicImport.png" alt="TypeScript_Example4" width="1150" height="336">
+
+
+----
+
+## Live Action DEMO time
+</br>
+</br>
+<img style="height:500px;" src="Images/demolition.jpg" alt="Demolition Time">
 
 ----
 
@@ -89,7 +105,7 @@ Makes use of the latest JavaScript features
 
 <a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/" alt="Link to TypeScript doc">Getting Started Guide</a>
 
-<img src="Images/tsdoc.png" style="height:500px;"  alt="Image of the TypeScript getting started doc"/>
+<img src="Images/Setup_TS.png" style="height:500px;"  alt="Image of the TypeScript getting started doc"/>
 
 ----
 
@@ -296,27 +312,15 @@ view.popup.selectedFeature.attributes.Name
 
 ----
 
-## Tip: Hide .js and .jsmap files 
-
-- Reduce clutter
-- VSCode: Add below to user preferences in files.exclude
-
-```
- **/*.js.map": true,
-        "**/*.js": {
-            "when": "$(basename).ts
-
-```
-
-----
-
 
 ### **Where can I get more info?**
+
+<br>
 
 - SDK Documentation
 - Esri-related training and webinars
 - ArcGIS Blogs
-- GeoNet, StackExchange, Spatial Community in Slack, etc.</br>
+- GeoNet, Spatial Community in Slack, StackExchange, etc.</br>
 </br>
 <a href="https://www.esri.com/arcgis-blog/products/js-api-arcgis/mapping/using-typescript-with-the-arcgis-api-for-javascript/" target="_blank">
 <img style="float:bottom;" src="Images/Using_TS_blog.png" alt="Using_TS_blog">
