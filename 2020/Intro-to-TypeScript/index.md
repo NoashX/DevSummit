@@ -73,17 +73,25 @@ Enhanced IDE support
 Makes use of the latest JavaScript features
 </br>
 </br>
-<img src="Images/promise_async_await.png" alt="TypeScript_Example3" width="1275" height="485">
+<img src="Images/dynamicImport.png" alt="TypeScript_Example4" width="1150" height="336">
 
 ----
 
 ### **Why use TypeScript?**
 </br>
-Makes use of the latest JavaScript features
+Makes use of the latest JavaScript features - optional chaning
 </br>
 </br>
-<img src="Images/dynamicImport.png" alt="TypeScript_Example4" width="1150" height="336">
+<img src="Images/optional-chaining.png" alt="TypeScript_Example5" width="1222" height="336">
 
+----
+
+### **Why use TypeScript?**
+</br>
+Makes use of the latest JavaScript features - nullish coalescing
+</br>
+</br>
+<img src="Images/nullish-coalescing.png" alt="TypeScript_Example6" width="1224" height="348">
 
 ----
 
