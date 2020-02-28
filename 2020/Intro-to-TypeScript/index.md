@@ -1,19 +1,11 @@
-<!-- .slide: data-background="../reveal.js/img/background.jpg" -->
+<!-- .slide: data-background="../reveal.js/img/intro.jpg" -->
 <!-- .slide: class="title" -->
-<br>
-## Intro to TypeScript
-<br>
-<b>Kelly Hutchins and Noah Sager</b>
+
 </br>
-</br>
-</br>
-Presentation:
-</br>
-<a href="https://noashx.github.io/DevSummit/2020/Intro-to-TypeScript" target="_blank">https://noashx.github.io/DevSummit/2020/Intro-to-TypeScript</a>
-</br>
-</br>
-</br>
-<small>Wednesday, March 11, 2020, 11:15am - 11:45am, Demo Theater 2</small>
+<h1 style="text-align: left; font-size: 80px;">Intro to TypeScript</h1>
+<p style="text-align: left; font-size: 30px;">Kelly Hutchins && Noah Sager</p>
+<p style="text-align: left; font-size: 20px;">slides: <a href="http://esriurl.com/15962" target="_blank">http://esriurl.com/15962</a></p>
+<p style="text-align: left; font-size: 20px;">Wednesday, March 11, 2020, 11:15am-11:45am, Demo Theater 2</p>
 
 ----
 
@@ -312,15 +304,6 @@ view.popup.selectedFeature.attributes.Name
 
 ----
 
-## Tip: Debugging with source maps
-  - Enable source maps in browser dev tools
-  - Set breakpoints in .ts instead of .js
-
-  ![JS Code](Images/transpiled.png)
-
-----
-
-
 ### **Where can I get more info?**
 
 <br>
@@ -337,12 +320,12 @@ view.popup.selectedFeature.attributes.Name
 
 ### **Additional TypeScript Session**
 
-<a><img style="float:bottom;" src="Images/Using_TS_with_JSAPI.png" alt="TypeScript_Session"</a>
+<a><img style="float:bottom;" src="Images/Using_TS_with_JSAPI.png" alt="TypeScript_Session"></a>
 
 ----
 
-<a><img style="float:bottom;" src="Images/bg-rating.jpg" alt="Ratings"</a>
+<a><img style="float:bottom;" src="Images/bg-rating.jpg" alt="Ratings"></a>
 
 ---
 
-<a><img style="float:bottom;" src="Images/bg-intro.jpg" alt="Ending"</a>
+<a><img style="float:bottom;" src="Images/bg-intro.jpg" alt="Ending"></a>
