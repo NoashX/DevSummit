@@ -57,7 +57,7 @@
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
 ## Benefits
 
-![TypeScript](./images/typescript.jpg)
+![TypeScript](images/typescript.jpg)
 - Easier for multiple people to work on
 - Easier to refactor
 - Easier to test
@@ -123,7 +123,7 @@ npm install --save @types/arcgis-js-api
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
 ## **Demo: Build a TypeScript app from scratch**
 
-<img style="float:bottom;" src="Images/KellyH.png" alt="Kelly_Hutchins">
+<img style="float:bottom;" src="images/KellyH.png" alt="Kelly_Hutchins">
 
 ---
 
@@ -147,7 +147,7 @@ npm install --save @types/arcgis-js-api
   - Enable source maps in browser dev tools
   - Set breakpoints in .ts instead of .js
 
-  ![JS Code](Images/transpiled.png)
+  ![JS Code](images/transpiled.png)
 
 ---
 
