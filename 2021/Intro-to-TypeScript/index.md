@@ -1,107 +1,135 @@
-<!-- .slide: data-background="../reveal.js/img/bg-1.png" -->
-<!-- .slide: class="title" -->
-<br>
-<br>
-<br>
-### Intro to TypeScript
-<br>
-Kelly Hutchins and Noah Sager
-</br>
-</br>
-Presentation:
-</br>
-<a href="https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript" target="_blank">https://noashx.github.io/DevSummit/2019/Intro-to-TypeScript</a>
+<!-- .slide: data-background="../img/2021/dev-summit/bg-1.png" data-background-size="cover -->
+<h1 style="text-align: left; font-size: 80px;">Intro to TypeScript</h1>
+<p style="text-align: left; font-size: 30px;">Kelly Hutchins | <a href="https://twitter.com/kellyhutchins">@kellyhutchins</a></p>
+<p style="text-align: left; font-size: 30px;">Noah Sager | <a href="https://twitter.com/Noashx">@noashx</a></p>
+<p style="text-align: left; font-size: 30px;"></p></br>
+<p style="text-align: left; font-size: 20px;">Presentation slides: <a href="https://noashx.github.io/DevSummit/2021/Intro-to-TypeScript">https://noashx.github.io/DevSummit/2021/Intro-to-TypeScript</a></p>
 
-----
+---
 
-### **Agenda**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-3.png" -->
+## Agenda
 </br>
+
  - What is TypeScript?
  - Why use TypeScript?
- - Setup and First steps
- - Live Action Demo
+ - Real-life Demo
  - Where can I get more info?
 
-----
+---
 
-### **What is TypeScript?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## What is TypeScript?
+
 <a href="https://www.typescriptlang.org/" target="_blank">
-<img style="float:bottom;" src="Images/TypeScript_Superset_JavaScript.png" alt="TypeScript_Superset_JavaScript">
+<img style="float:center;" src="images/TypeScript_Superset_JavaScript.png" alt="TypeScript_Superset_JavaScript">
 </a>
 
-----
+---
 
-### **Where do I begin?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Where do I begin?
+
 <a href="https://www.typescriptlang.org/" target="_blank">
-<img src="Images/TS.png" alt="TypeScript landing page" width="1037" height="516">
+<img src="images/TS.png" alt="TypeScript landing page" width="1037" height="516">
 </a>
 
-----
+---
 
-### **Developer Setup**
-</br>
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## **Developer Setup**
+
 <a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
-<img style="float:bottom;" src="Images/Setup_TS.png" alt="Setup_TS">
+<img src="images/TypeScript - Setting up.png" alt="TypeScript - Setting up">
 </a>
 
-----
+---
 
-### **Why use TypeScript?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## **Developer Setup**
+
+<a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
+<img src="images/TS_setup.png" alt="Setup_TS">
+</a>
+
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Benefits
+
+![TypeScript](./images/typescript.jpg)
+- Easier for multiple people to work on
+- Easier to refactor
+- Easier to test
+- Can help prevent technical debt
+
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Why use TypeScript?
 </br>
-TypeScript adds `type` support to JavaScript
+TypeScript adds <b>type</b> support to JavaScript
 </br>
-<img src="Images/addFeatureLayer_TS.png" alt="TypeScript_Example1" width="1538" height="454">
+</br>
+<img src="images/TS_1a.png" alt="TypeScript_Example1">
 
-----
+---
 
-### **Why use TypeScript?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Why use TypeScript?
 </br>
 Enhanced IDE support
 </br>
-<img src="Images/addFeatureLayer_TS_error.png" alt="TypeScript_Example2" width="1556" height="466">
+<img src="images/TS_2.png" alt="TypeScript_Example2">
 
-----
+---
 
-### **Why use TypeScript?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Why use TypeScript?
 </br>
 Makes use of the latest JavaScript features
 </br>
-<img src="Images/promise_async_await.png" alt="TypeScript_Example3" width="1700" height="646">
+</br>
+<img src="images/promise_async_await_carbon4.png" alt="TypeScript_Example3">
 
-----
+---
 
-### **Why use TypeScript?**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Why use TypeScript?
 </br>
 Makes use of the latest JavaScript features
 </br>
-<img src="Images/dynamicImport.png" alt="TypeScript_Example4" width="1150" height="336">
+</br>
+<img src="images/dynamicModule2.png" alt="TypeScript_Example4">
 
-----
+---
 
-### **Setup and First steps**
-<br></br>
-1. The recommended way to install TypeScript is via `Node` and `npm`.
-<br></br>
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Setup and First steps
+
+1. The recommended way to install TypeScript is via `node` and `npm`.
+
 2. Make sure to install TypeScript globally: <br>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim>
+```bash
 npm install -g typescript
-</code></pre>
-<br></br>
+```
 3. Install the ArcGIS API for JavaScript Typings: <br>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 100%;"><code data-trim>
+```bash
 npm install --save @types/arcgis-js-api
-</code></pre>
-<br></br>
+```
 
-----
+---
 
-### **Demo: Build a TypeScript app from scratch**
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## **Demo: Build a TypeScript app from scratch**
 
 <img style="float:bottom;" src="Images/KellyH.png" alt="Kelly_Hutchins">
 
-----
-### **Tip: Hide .js and .jsmap files **
+---
 
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Tip: Hide .js and .jsmap files
+</br>
 - Reduce clutter
 - VSCode: Add below to user preferences in files.exclude
 
@@ -112,15 +140,19 @@ npm install --save @types/arcgis-js-api
 
 ```
 
-----
-### **Tip: Debugging with source maps**
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Tip: Debugging with source maps
   - Enable source maps in browser dev tools
   - Set breakpoints in .ts instead of .js
 
   ![JS Code](Images/transpiled.png)
 
-----
-### **Tip: Use __esri instead of import**
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Tip: Use __esri instead of import
 - Only contains type interfaces
 - Can use when not instantiating type
 ```
@@ -132,28 +164,33 @@ const layerList = new LayerList({
   }
 });
 ```
-----
 
-### **Where can I get more info?**
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
+## Where can I get more info?
 
 - SDK Documentation
 - Esri-related training and webinars
 - ArcGIS Blogs
-- GeoNet, StackExchange, Spatial Community in Slack, etc.</br>
+- GeoNet, StackExchange, etc.</br>
 </br>
 <a href="https://www.esri.com/arcgis-blog/products/js-api-arcgis/mapping/using-typescript-with-the-arcgis-api-for-javascript/" target="_blank">
-<img style="float:bottom;" src="Images/Using_TS_blog.png" alt="Using_TS_blog">
-
-----
-
-### **Additional TypeScript Session**
-
-<a><img style="float:bottom;" src="Images/Using_TS_with_JSAPI.png" alt="TypeScript_Session"</a>
-
-----
-
-<a><img style="float:bottom;" src="Images/bg-rating.png" alt="Ratings"</a>
+<img style="float:bottom;" src="images/Using_TS_blog.png" alt="Using_TS_blog">
 
 ---
 
-<a><img style="float:bottom;" src="Images/bg-esri.png" alt="Ending"</a>
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-1.png" -->
+## **Additional TypeScript Session**
+
+<img style="float:bottom;" src="images/Using_TS_with_JSAPI.png" alt="TypeScript_Session">
+
+---
+
+<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-5.png" -->
+
+![esri](images/esri-science-logo-white.png "esri")
+
+---
+
+<!-- .slide: data-auto-animate data-background="images/2021-feedback.jpg" -->
