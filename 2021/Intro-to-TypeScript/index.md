@@ -22,7 +22,7 @@
 ## What is TypeScript?
 
 <a href="https://www.typescriptlang.org/" target="_blank">
-<img style="float:center;" src="images/TypeScript_Superset_JavaScript.png" alt="TypeScript_Superset_JavaScript">
+<img style="float:center;" src="pictures/TypeScript_Superset_JavaScript.png" alt="TypeScript_Superset_JavaScript">
 </a>
 
 ---
