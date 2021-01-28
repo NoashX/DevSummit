@@ -31,7 +31,7 @@
 ## Where do I begin?
 
 <a href="https://www.typescriptlang.org/" target="_blank">
-<img src="images/TS.png" alt="TypeScript landing page" width="1037" height="516">
+<img src="pictures/TS.png" alt="TypeScript landing page" width="1037" height="516">
 </a>
 
 ---
@@ -40,7 +40,7 @@
 ## **Developer Setup**
 
 <a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
-<img src="images/TypeScript - Setting up.png" alt="TypeScript - Setting up">
+<img src="pictures/TypeScript - Setting up.png" alt="TypeScript - Setting up">
 </a>
 
 ---
@@ -49,7 +49,7 @@
 ## **Developer Setup**
 
 <a href="https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html" target="_blank">
-<img src="images/TS_setup.png" alt="Setup_TS">
+<img src="pictures/TS_setup.png" alt="Setup_TS">
 </a>
 
 ---
@@ -57,7 +57,7 @@
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
 ## Benefits
 
-![TypeScript](images/typescript.jpg)
+![TypeScript](pictures/typescript.jpg)
 - Easier for multiple people to work on
 - Easier to refactor
 - Easier to test
@@ -71,7 +71,7 @@
 TypeScript adds <b>type</b> support to JavaScript
 </br>
 </br>
-<img src="images/TS_1a.png" alt="TypeScript_Example1">
+<img src="pictures/TS_1a.png" alt="TypeScript_Example1">
 
 ---
 
@@ -80,7 +80,7 @@ TypeScript adds <b>type</b> support to JavaScript
 </br>
 Enhanced IDE support
 </br>
-<img src="images/TS_2.png" alt="TypeScript_Example2">
+<img src="pictures/TS_2.png" alt="TypeScript_Example2">
 
 ---
 
@@ -90,7 +90,7 @@ Enhanced IDE support
 Makes use of the latest JavaScript features
 </br>
 </br>
-<img src="images/promise_async_await_carbon4.png" alt="TypeScript_Example3">
+<img src="pictures/promise_async_await_carbon4.png" alt="TypeScript_Example3">
 
 ---
 
@@ -100,7 +100,7 @@ Makes use of the latest JavaScript features
 Makes use of the latest JavaScript features
 </br>
 </br>
-<img src="images/dynamicModule2.png" alt="TypeScript_Example4">
+<img src="pictures/dynamicModule2.png" alt="TypeScript_Example4">
 
 ---
 
@@ -123,7 +123,7 @@ npm install --save @types/arcgis-js-api
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
 ## **Demo: Build a TypeScript app from scratch**
 
-<img style="float:bottom;" src="images/KellyH.png" alt="Kelly_Hutchins">
+<img style="float:bottom;" src="pictures/KellyH.png" alt="Kelly_Hutchins">
 
 ---
 
@@ -147,7 +147,7 @@ npm install --save @types/arcgis-js-api
   - Enable source maps in browser dev tools
   - Set breakpoints in .ts instead of .js
 
-  ![JS Code](images/transpiled.png)
+  ![JS Code](pictures/transpiled.png)
 
 ---
 
@@ -176,21 +176,21 @@ const layerList = new LayerList({
 - GeoNet, StackExchange, etc.</br>
 </br>
 <a href="https://www.esri.com/arcgis-blog/products/js-api-arcgis/mapping/using-typescript-with-the-arcgis-api-for-javascript/" target="_blank">
-<img style="float:bottom;" src="images/Using_TS_blog.png" alt="Using_TS_blog">
+<img style="float:bottom;" src="pictures/Using_TS_blog.png" alt="Using_TS_blog">
 
 ---
 
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-1.png" -->
 ## **Additional TypeScript Session**
 
-<img style="float:bottom;" src="images/Using_TS_with_JSAPI.png" alt="TypeScript_Session">
+<img style="float:bottom;" src="pictures/Using_TS_with_JSAPI.png" alt="TypeScript_Session">
 
 ---
 
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-5.png" -->
 
-![esri](images/esri-science-logo-white.png "esri")
+![esri](pictures/esri-science-logo-white.png "esri")
 
 ---
 
-<!-- .slide: data-auto-animate data-background="images/2021-feedback.jpg" -->
+<!-- .slide: data-auto-animate data-background="pictures/2021-feedback.jpg" -->
