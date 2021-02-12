@@ -128,46 +128,6 @@ npm install --save @types/arcgis-js-api
 ---
 
 <!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
-## Tip: Hide .js and .jsmap files
-</br>
-- Reduce clutter
-- VSCode: Add below to user preferences in files.exclude
-
-```
- **/*.js.map": true,
-        "**/*.js": {
-            "when": "$(basename).ts
-
-```
-
----
-
-<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
-## Tip: Debugging with source maps
-  - Enable source maps in browser dev tools
-  - Set breakpoints in .ts instead of .js
-
-  ![JS Code](pictures/transpiled.png)
-
----
-
-<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
-## Tip: Use __esri instead of import
-- Only contains type interfaces
-- Can use when not instantiating type
-```
-import esri = __esri;
-const layerList = new LayerList({
-  view,
-  listItemCreatedFunction: event => {
-    const item = event.item as __esri.ListItem;
-  }
-});
-```
-
----
-
-<!-- .slide: data-auto-animate data-background="../img/2021/dev-summit/bg-2.png" -->
 ## Where can I get more info?
 
 - SDK Documentation
